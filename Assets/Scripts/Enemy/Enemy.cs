@@ -7,6 +7,10 @@ public class Enemy : MonoBehaviour
     [Header("数值")]
     [SerializeField] private bool canFly;
 
+    [SerializeField] private float originalMaxHealth;
+    [SerializeField] private float MaxHealth;
+    [SerializeField] private float health;
+
     [SerializeField] private float originalSpeed;
     private float speed;
 
@@ -65,8 +69,26 @@ public class Enemy : MonoBehaviour
         StartCoroutine(WaitForAttackCD());
     }
 
+    public void ReceiveDamage(float damage)
+    {
+        health -= Mathf.Min(health, damage);
+        if (health <= 0)
+        {
+            Die();
+        }
+
+    }
+
+
+    public void Die()
+    {
+        GameObject.Destroy(gameObject);//实现敌人对象池后重构
+    }
     private void Initialize()
     {
+        //增加buff系统后重构
+        MaxHealth = originalMaxHealth;
+        health = MaxHealth;
         speed = originalSpeed;
         damageToUnit = originalDamageToUnit;
         damageToPlayer = originalDamageToPlayer;

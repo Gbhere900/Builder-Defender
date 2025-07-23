@@ -214,11 +214,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canFly: 0
-  originalSpeed: 100
+  originalMaxHealth: 20
+  MaxHealth: 0
+  health: 0
+  originalSpeed: 0
   originalDamageToUnit: 5
   originalDamageToPlayer: 5
   originalDamageToBuilding: 5
-  AttackCD: 1
+  attackCD: 0
   collider: {fileID: 0}
   rigidbody: {fileID: 0}
 --- !u!136 &5200365033506251645

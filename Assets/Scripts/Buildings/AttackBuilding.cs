@@ -11,7 +11,7 @@ public abstract class AttackBuilding : Building
 
     [SerializeField] protected Transform shootPoint;
 
-    [Header("脚本组件")]
+    [Header("攻击建筑脚本组件")]
     [SerializeField] protected CapsuleCollider attackCollider;
 
     protected List<Enemy> attackTargetList;
@@ -59,11 +59,18 @@ public abstract class AttackBuilding : Building
     {
         if (!attackReady)
             return false;
-        if(attackTargetList.Count != 0)
+        if(attackTargetList.Count == 0)
         {
-            attackTarget = attackTargetList[0];
+            return false;
+            
+        }
+        if (attackTargetList[0] == null)
+        {
+            attackTargetList.RemoveAt(0);
+            return false;
         }
 
+        attackTarget = attackTargetList[0];
         Attack();
         attackReady = false;
         StartCoroutine(WaitForAttackCD());

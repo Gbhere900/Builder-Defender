@@ -14,6 +14,17 @@ public class ObjectPoolClass
         objectPool = new ObjectPool<GameObject>(CreateFunction, ActionOnGet, ActionOnRelease, ActionOnDestroy);
     }
 
+
+    public GameObject Get()
+    {
+        return objectPool.Get();
+    }
+
+
+    public void Release(GameObject gameObject)
+    {
+        objectPool.Release(gameObject);
+    }
     private GameObject CreateFunction()
     {
         return GameObject.Instantiate(prefab);
@@ -34,8 +45,4 @@ public class ObjectPoolClass
         GameObject.Destroy(prefabs.gameObject);
     }
 
-    public GameObject Get()
-    {
-        return objectPool.Get();   
-    }
 }

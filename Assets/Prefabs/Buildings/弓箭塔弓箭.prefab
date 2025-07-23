@@ -94,8 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 048294337bdd76546ad7fd6b4f3c7844, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
-  speed: 3
+  timeToLive: 3
   heightOffsetCurve:
     serializedVersion: 2
     m_Curve:
@@ -135,6 +134,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  goundLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!136 &8946933213490470042
 CapsuleCollider:
   m_ObjectHideFlags: 0

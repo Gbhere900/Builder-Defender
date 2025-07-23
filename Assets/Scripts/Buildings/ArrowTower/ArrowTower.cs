@@ -15,7 +15,7 @@ public class ArrowTower : AttackBuilding
     {
         Arrow arrow = ObjectPoolManager.Instance().GetObject(arrowPrefabs.gameObject).GetComponent<Arrow>();
        // Arrow arrow = GameObject.Instantiate(arrowPrefabs,shootPoint);//对象池实现后重构
-        arrow.Initialize(attackTarget,damage,arrowSpeed);
+        arrow.Initialize(shootPoint.position,attackTarget,damage,arrowSpeed);
     }
 
 }

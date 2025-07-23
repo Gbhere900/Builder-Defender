@@ -11,7 +11,7 @@ public abstract class Building : MonoBehaviour
     [SerializeField] protected float maxHealth;
     [SerializeField] protected float health;
 
-    [Header("脚本组件")]
+    [Header("建筑通用脚本组件")]
 
     [SerializeField] protected Rigidbody rigidbody;
 

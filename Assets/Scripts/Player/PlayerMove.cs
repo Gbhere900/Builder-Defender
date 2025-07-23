@@ -27,7 +27,7 @@ public class PlayerMove : MonoBehaviour
 
     private void MoveInput()
     {
-        direction = Vector3.zero;
+        
         if (Input.GetKey(KeyCode.W))
         {
             direction.z = 1;
@@ -44,11 +44,14 @@ public class PlayerMove : MonoBehaviour
         {
             direction.x = 1;
         }
+       // Debug.Log(direction);
         
     }
 
     private void Move()
     {
         rigidbody.velocity = direction.normalized * speed * Time.deltaTime;
+        //Debug.Log(rigidbody.velocity);
+        direction = Vector3.zero;
     }
 }
