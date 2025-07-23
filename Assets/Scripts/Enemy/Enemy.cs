@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,6 +33,9 @@ public class Enemy : MonoBehaviour
     [Header("脚本组件")]
     [SerializeField] private Collider collider;
     [SerializeField] private Rigidbody rigidbody;
+
+    //事件
+    public Action OnHealthChanged;
 
     private void Awake()
     {
@@ -76,6 +80,7 @@ public class Enemy : MonoBehaviour
         {
             Die();
         }
+        OnHealthChanged.Invoke();
 
     }
 
@@ -96,5 +101,15 @@ public class Enemy : MonoBehaviour
 
         collider = GetComponent<Collider>();
         rigidbody = GetComponent<Rigidbody>();
+    }
+
+    public float GetHealth()
+    {
+        return health; 
+    }
+
+    public float GetMaxHealth()
+    {
+        return MaxHealth;
     }
 }
