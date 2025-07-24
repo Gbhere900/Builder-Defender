@@ -11,7 +11,7 @@ public class CameraMove : MonoBehaviour
     {
         
         deltaVector = transform.position - FollowObeject.position;
-        transform.LookAt(FollowObeject);
+        //transform.forward = FollowObeject.transform.position - transform.position;
     }
     private void Update()
     {

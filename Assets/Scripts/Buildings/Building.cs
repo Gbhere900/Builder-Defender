@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(FriendlyOBject))]
 public abstract class Building : MonoBehaviour
 {
     [Header("ÊýÖµ")]

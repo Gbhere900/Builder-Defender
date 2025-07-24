@@ -27,23 +27,29 @@ public class PlayerMove : MonoBehaviour
 
     private void MoveInput()
     {
-        
+        direction = Vector3.zero;
         if (Input.GetKey(KeyCode.W))
         {
-            direction.z = 1;
+            //direction.z = 1;
+            direction += Camera.main.transform.up;
+            
         }
         if (Input.GetKey(KeyCode.A))
         {
-            direction.x = -1;
+            //direction.x = -1;
+            direction += - Camera.main.transform.right;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            direction.z = -1;
+            //direction.z = -1;
+            direction += - Camera.main.transform.up;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            direction.x = 1;
+            //direction.x = 1;
+            direction += Camera.main.transform.right;
         }
+        direction.y= 0;
        // Debug.Log(direction);
         
     }

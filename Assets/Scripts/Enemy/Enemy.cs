@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
     [Header("数值")]
     [SerializeField] private bool canFly;
+    [SerializeField] private List<FriendlyUnitType> aimFriendlyUnitType;
 
     [SerializeField] private float originalMaxHealth;
     [SerializeField] private float MaxHealth;
@@ -26,7 +28,7 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private float attackCD;
 
-    private PlayerHealth attackAim;
+    private FriendlyOBject AimFriendlyUnit;
     private bool attackReady = true;
 
 
@@ -39,8 +41,14 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
+        
+       // AimFriendlyUnit = GameObject.FindFirstObjectByType<PlayerHealth>(); //需要重构
+    }
+
+    private void OnEnable()
+    {
         Initialize();
-        attackAim = GameObject.FindFirstObjectByType<PlayerHealth>(); //需要重构
+        SetAimFriendlyUnit();
     }
 
     IEnumerator WaitForAttackCD()
@@ -63,13 +71,13 @@ public class Enemy : MonoBehaviour
 
     private void Move()
     {
-        Vector3 direction = attackAim.transform.position - transform.position;
+        Vector3 direction = AimFriendlyUnit.transform.position - transform.position;
         rigidbody.velocity = direction * Time.deltaTime * speed;
     }
     private void Attack()
     {
         attackReady = false;
-        attackAim.GetComponent<PlayerHealth>().ReceiveDamage(damageToPlayer);
+        AimFriendlyUnit.GetComponent<PlayerHealth>().ReceiveDamage(damageToPlayer);
         StartCoroutine(WaitForAttackCD());
     }
 
@@ -111,5 +119,38 @@ public class Enemy : MonoBehaviour
     public float GetMaxHealth()
     {
         return MaxHealth;
+    }
+
+    private void SetAimFriendlyUnit()
+    {
+        foreach(FriendlyUnitType friendlyUnitType in aimFriendlyUnitType)
+        {
+            float minDistance = float.MaxValue;
+            int index = -1;
+            List<FriendlyOBject> friendlyObjectList = FriendlyOBjectManager.Instance().GetFriendlyObjetcList();
+            for (int i = 0; i <friendlyObjectList.Count;i++)
+            {
+                if (friendlyObjectList[i].GetFriendlyUnitType() != friendlyUnitType)
+                {
+                    continue;
+                }
+                    
+                if (Vector3.Distance(transform.position, friendlyObjectList[i].transform.position) < minDistance)
+                {
+                    minDistance = Vector3.Distance(transform.position, friendlyObjectList[i].transform.position);
+                    index = i;
+                }
+            }
+            if(index != -1)
+            {
+                AimFriendlyUnit = friendlyObjectList[index];
+                Debug.Log(gameObject.name + "已找到目标\n"+ AimFriendlyUnit.gameObject.name);
+                AimFriendlyUnit.OnDestroyed += () => SetAimFriendlyUnit();
+                return;
+            }
+        }
+
+        Debug.LogWarning(gameObject.name + "未找到目标");
+        
     }
 }

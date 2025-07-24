@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(FriendlyOBject))]
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private float maxHealth;
