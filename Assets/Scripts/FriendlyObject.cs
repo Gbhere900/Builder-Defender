@@ -16,7 +16,7 @@ public class FriendlyOBject : MonoBehaviour
     private void OnDisable()
     {
         FriendlyOBjectManager.Instance().RemoveFriendlyObject(this);
-        OnDestroyed.Invoke();
+        OnDestroyed?.Invoke();
     }
 
 
