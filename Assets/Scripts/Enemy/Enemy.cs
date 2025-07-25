@@ -150,7 +150,7 @@ public class Enemy : MonoBehaviour
             }
         }
 
-        Debug.LogWarning(gameObject.name + "未找到目标");
+        //Debug.LogWarning(gameObject.name + "未找到目标");
         
     }
 }

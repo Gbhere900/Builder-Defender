@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class EnemyUI : MonoBehaviour
     [SerializeField] private Image healthBar;
     private Vector3 healthBarOffset;
     private Enemy enemy;
+    private CinemachineBrain brain;
 
     private void OnEnable()
     {
@@ -33,23 +35,28 @@ public class EnemyUI : MonoBehaviour
     }
     private void Update()
     {
-        UpdateHealthBarPosition();
-        UpdateHealthBarRotation();
+
     }
 
-    private void UpdateHealthBarPosition()
-    {
-       // Debug.Log(healthBarOffset);
-        healthBar.transform.position = enemy.transform.position + healthBarOffset;
-    }
+
     private void Initialize()
     {
         enemy = GetComponent<Enemy>();
+
         healthBarOffset = healthBar.gameObject.transform.position - transform.position;
+
+        //// 获取主摄像机上的CinemachineBrain组件
+        //Camera mainCamera = Camera.main;
+        //brain = mainCamera.GetComponent<CinemachineBrain>();
+
+        //if (brain == null)
+        //{
+        //    Debug.LogError("主摄像机上未找到CinemachineBrain组件！");
+        //    return;
+        //}
+
+        //// 获取当前激活的Virtual Camera
+        //activeVirtualCamera = (CinemachineVirtualCameraBase)brain.ActiveVirtualCamera;
     }
-    private void UpdateHealthBarRotation()
-    {
-        healthBar.transform.up = Camera.main.transform.position - healthBar.transform.position;
-       // healthBar.transform.forward = - Camera.main.transform.right;
-    }
+
 }
