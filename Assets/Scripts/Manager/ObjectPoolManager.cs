@@ -20,7 +20,7 @@ public class ObjectPoolManager : MonoBehaviour
     }
 
 
-    public GameObject GetObject(GameObject prefab )
+    public GameObject GetObject(GameObject prefab)
     {
         string name = NormalizeName(prefab.name);
         if(ObjectPoolDictionary.ContainsKey(name))

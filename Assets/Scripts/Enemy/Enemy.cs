@@ -28,7 +28,7 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private float attackCD;
 
-    private FriendlyOBject AimFriendlyUnit;
+    private FriendlyOBject aimFriendlyUnit;
     private bool attackReady = true;
 
 
@@ -38,6 +38,7 @@ public class Enemy : MonoBehaviour
 
     //事件
     public Action OnHealthChanged;
+    public Action OnDead;
 
     private void Awake()
     {
@@ -58,44 +59,48 @@ public class Enemy : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if (aimFriendlyUnit == null)
+            return;
         Move();
     }
 
     private void OnCollisionStay(Collision collision)
     {
         if (!attackReady) return;
-        if (collision.gameObject.GetComponent<PlayerHealth>())
+        if (collision.gameObject.GetComponent<PlayerHealth>())       //等待重构
             Attack();
 
     }
 
     private void Move()
     {
-        Vector3 direction = AimFriendlyUnit.transform.position - transform.position;
+        Vector3 direction = aimFriendlyUnit.transform.position - transform.position;
         rigidbody.velocity = direction * Time.deltaTime * speed;
     }
     private void Attack()
     {
         attackReady = false;
-        AimFriendlyUnit.GetComponent<PlayerHealth>().ReceiveDamage(damageToPlayer);
+        aimFriendlyUnit.GetComponent<PlayerHealth>().ReceiveDamage(damageToPlayer);         //等待重构，用触发器控制造成伤害
         StartCoroutine(WaitForAttackCD());
     }
 
     public void ReceiveDamage(float damage)
     {
         health -= Mathf.Min(health, damage);
+        OnHealthChanged.Invoke();
         if (health <= 0)
         {
             Die();
         }
-        OnHealthChanged.Invoke();
+        
 
     }
 
 
     public void Die()
     {
-        GameObject.Destroy(gameObject);//实现敌人对象池后重构
+        ObjectPoolManager.Instance().ReleaseObject(this.gameObject);  
+        OnDead.Invoke();
     }
     private void Initialize()
     {
@@ -109,6 +114,7 @@ public class Enemy : MonoBehaviour
 
         collider = GetComponent<Collider>();
         rigidbody = GetComponent<Rigidbody>();
+        
     }
 
     public float GetHealth()
@@ -123,6 +129,10 @@ public class Enemy : MonoBehaviour
 
     private void SetAimFriendlyUnit()
     {
+        if(aimFriendlyUnit !=null)
+        {
+            aimFriendlyUnit.OnDestroyed -= SetAimFriendlyUnit;
+        }
         foreach(FriendlyUnitType friendlyUnitType in aimFriendlyUnitType)
         {
             float minDistance = float.MaxValue;
@@ -143,14 +153,15 @@ public class Enemy : MonoBehaviour
             }
             if(index != -1)
             {
-                AimFriendlyUnit = friendlyObjectList[index];
-                Debug.Log(gameObject.name + "已找到目标\n"+ AimFriendlyUnit.gameObject.name);
-                AimFriendlyUnit.OnDestroyed += () => SetAimFriendlyUnit();
+                aimFriendlyUnit = friendlyObjectList[index];
+                Debug.Log(gameObject.name + "已找到目标\n"+ aimFriendlyUnit.gameObject.name);
+                aimFriendlyUnit.OnDestroyed +=  SetAimFriendlyUnit;
                 return;
             }
         }
 
-        //Debug.LogWarning(gameObject.name + "未找到目标");
+        aimFriendlyUnit = null;
+        Debug.LogWarning(gameObject.name + "未找到目标");
         
     }
 }

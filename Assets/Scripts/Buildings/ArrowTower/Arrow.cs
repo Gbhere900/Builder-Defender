@@ -93,7 +93,7 @@ public class Arrow : MonoBehaviour
         CalculateForwardVector();
     }
 
-    public void Initialize(Vector3 position, Enemy attackTarget,float damage,float speed)
+    public void Initialize(Vector3 position, Enemy attackTarget,float damage,float speed,float timeToLive = 3)
     {
         Debug.Log(position);
         transform.position = position;
@@ -101,6 +101,7 @@ public class Arrow : MonoBehaviour
         this.attackTarget = attackTarget;
         this.damage = damage;
         this.speed = speed;
+        this.timeToLive = timeToLive;
 
         //float deltaX = attackTarget.transform.position.x - transform.position.x;
         //float deltaZ = attackTarget.transform.position.z - transform.position.z;

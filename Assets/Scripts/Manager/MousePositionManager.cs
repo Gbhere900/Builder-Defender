@@ -20,7 +20,7 @@ public class MousePositionManager : MonoBehaviour
         instance.ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Physics.Raycast(instance.ray, out RaycastHit rayCastHit, float.MaxValue, instance.mask);
         mousePosition = rayCastHit.point;
-        Debug.Log("Êó±ê×ø±êÎª" + mousePosition);
+   
         return mousePosition;
     }
     public static MousePositionManager Instance()

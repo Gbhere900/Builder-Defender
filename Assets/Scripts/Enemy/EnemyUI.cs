@@ -30,7 +30,6 @@ public class EnemyUI : MonoBehaviour
 
     private void UpdateHealthBar()
     {
-        Debug.Log(healthBar.fillAmount);
         healthBar.fillAmount =enemy.GetHealth() / enemy.GetMaxHealth();
     }
     private void Update()
