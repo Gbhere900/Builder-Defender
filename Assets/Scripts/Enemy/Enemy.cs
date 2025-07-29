@@ -38,7 +38,7 @@ public class Enemy : MonoBehaviour
 
     //ÊÂ¼þ
     public Action OnHealthChanged;
-    public Action OnDead;
+    public Action<Enemy> OnDead;
 
     private void Awake()
     {
@@ -100,7 +100,7 @@ public class Enemy : MonoBehaviour
     public void Die()
     {
         ObjectPoolManager.Instance().ReleaseObject(this.gameObject);  
-        OnDead.Invoke();
+        OnDead.Invoke(this);
     }
     private void Initialize()
     {

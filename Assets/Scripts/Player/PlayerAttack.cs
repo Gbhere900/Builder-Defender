@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -57,6 +58,8 @@ public class PlayerAttack : MonoBehaviour
         {
             Debug.Log(enemy.gameObject.name + "进入范围");
             attackTargetList.Add(enemy);
+            enemy.OnDead += OnEnemyDead;
+
             if(attackTargetList.Count == 1 )
             {
                 attackIndex = 0;
@@ -65,17 +68,32 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
+    private void OnEnemyDead(Enemy enemy)
+    {
+        if(attackTargetList.Contains(enemy))
+        {
+            Debug.Log("PlayerAttack目标的Enemy死亡，将其从攻击目标列表移除");
+            attackTargetList.Remove(enemy);
+        }
+        else
+        {
+            Debug.LogWarning("敌人不在PlayerAttack列表中时死亡事件触发，说明敌人在离开玩家攻击范围后未取消订阅事件，现在执行取消订阅");
+            enemy.OnDead -= OnEnemyDead;
+        }
+       
+    }
+
     private void OnTriggerExit(Collider other)
     {
         if(other.TryGetComponent<Enemy>(out Enemy enemy))
         {
             Debug.Log(enemy.gameObject.name + "离开范围");
-            
             attackTargetList.Remove(enemy);
+            enemy.OnDead -=  OnEnemyDead;
             if(attackTarget = enemy)
             {
                 Debug.Log("当前攻击目标离开攻击范围");
-                SetClosestAttackTargetAsAttackTarget();
+                SetClosestAttackTargetAsAttackTarget(enemy);
                 
             }
         }
@@ -105,7 +123,7 @@ public class PlayerAttack : MonoBehaviour
         canAttack  = true;
     }
 
-    private void SetClosestAttackTargetAsAttackTarget()
+    private void SetClosestAttackTargetAsAttackTarget(Enemy enemy)   //这里的Enemy形参没用
     {
         if(attackTargetList.Count == 0)
         {

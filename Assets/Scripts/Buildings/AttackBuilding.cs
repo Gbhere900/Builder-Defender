@@ -4,6 +4,9 @@ using UnityEngine;
 
 public abstract class AttackBuilding : Building
 {
+    [SerializeField] protected Arrow arrowPrefabs;
+    [SerializeField] protected float arrowSpeed;
+
     [SerializeField] protected float attackCD;
     [SerializeField] protected bool attackReady = true;
     [SerializeField] protected float originalDamage;
@@ -34,23 +37,38 @@ public abstract class AttackBuilding : Building
         attackTargetList = new List<Enemy>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
         {
             Debug.Log(enemy.name);
             attackTargetList.Add(enemy);
+            enemy.OnDead += OnEnemyDead;
         }
             
     }
+    private void OnEnemyDead(Enemy enemy)
+    {
+        if (attackTargetList.Contains(enemy))
+        {
+            Debug.Log("PlayerAttack目标的Enemy死亡，将其从攻击目标列表移除");
+            attackTargetList.Remove(enemy);
+        }
+        else
+        {
+            Debug.LogWarning("敌人不在PlayerAttack列表中时死亡事件触发，说明敌人在离开玩家攻击范围后未取消订阅事件，现在执行取消订阅");
+            enemy.OnDead -= OnEnemyDead;
+        }
 
+    }
 
-    private void OnTriggerExit(Collider other)
+    protected virtual void OnTriggerExit(Collider other)
     {
         if (other.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
         {
             Debug.Log(enemy.name);
             attackTargetList.Remove(enemy);
+            enemy.OnDead -= OnEnemyDead;
         }
             
     }
@@ -77,6 +95,36 @@ public abstract class AttackBuilding : Building
         return true;
     }
 
-    protected abstract void Attack();
 
+    public void LevelUP_L2(int index)
+    {
+        maxHealth += LevelUPEnhance_L2[index].maxHealthEnhance;
+        damage *= (1 + LevelUPEnhance_L2[index].damageEnhance);
+        attackCollider.radius *= (1 + LevelUPEnhance_L2[index].attackRangeEnhance);
+        attackCD = attackCD / (1 + LevelUPEnhance_L2[index].attackSpeedEnhance);
+        arrowSpeed *= (1 + LevelUPEnhance_L2[index].arrowSpeedEnhance);
+        Debug.Log("升级到2级，选项为" + index);
+    }
+
+    public void LevelUP_L3(int index)
+    {
+        maxHealth += LevelUPEnhance_L3[index].maxHealthEnhance;
+        damage *= (1 + LevelUPEnhance_L3[index].damageEnhance);
+        attackCollider.radius *= (1 + LevelUPEnhance_L3[index].attackRangeEnhance);
+        attackCD = attackCD / (1 + LevelUPEnhance_L3[index].attackSpeedEnhance);
+        arrowSpeed *= (1 + LevelUPEnhance_L3[index].arrowSpeedEnhance);
+        Debug.Log("升级到3级，选项为" + index);
+    }
+
+    protected virtual void Attack()
+    {
+        ShootArrow();           
+    }
+
+    private void ShootArrow()
+    {
+        Arrow arrow = ObjectPoolManager.Instance().GetObject(arrowPrefabs.gameObject).GetComponent<Arrow>();
+        // Arrow arrow = GameObject.Instantiate(arrowPrefabs,shootPoint);//对象池实现后重构
+        arrow.Initialize(shootPoint.position, attackTarget, damage, arrowSpeed);        //arrow换成投射物父类
+    }
 }
