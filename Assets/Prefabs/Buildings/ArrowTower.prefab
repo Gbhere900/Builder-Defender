@@ -524,7 +524,7 @@ Transform:
   m_GameObject: {fileID: 3390180521368056695}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.77, z: 0}
+  m_LocalPosition: {x: 0, y: 1.97, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -875,6 +875,8 @@ GameObject:
   - component: {fileID: 7042768082822768729}
   - component: {fileID: 1101771844778436425}
   - component: {fileID: 751450592037406380}
+  - component: {fileID: 1078007782111454643}
+  - component: {fileID: 210008173080423322}
   m_Layer: 0
   m_Name: ArrowTower
   m_TagString: Untagged
@@ -911,18 +913,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4cc0268bd8a5a7499b7a51678b9bc76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
-  health: 10
+  maxHealth: 150
+  health: 150
+  currentLevel: 1
+  maxLevel: 3
+  LevelUPEnhance_L2: []
+  LevelUPEnhance_L3: []
   rigidbody: {fileID: 751450592037406380}
-  attackCD: 0.1
+  bulletPrefabs: {fileID: 9009959369473065244, guid: 7f9316223ea96054a951eaa20348c0c2,
+    type: 3}
+  arrowSpeed: 3
+  attackCD: 1
   attackReady: 1
   originalDamage: 10
   damage: 10
   shootPoint: {fileID: 8371179513106289366}
   attackCollider: {fileID: 1101771844778436425}
-  arrowPrefabs: {fileID: 9009959369473065244, guid: 7f9316223ea96054a951eaa20348c0c2,
-    type: 3}
-  arrowSpeed: 3
 --- !u!136 &1101771844778436425
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -943,7 +949,7 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 10
-  m_Height: 60
+  m_Height: 40
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &751450592037406380
@@ -973,6 +979,40 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &1078007782111454643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7771592090955194750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ecd92e9ab92922419d256b4936e860e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  friendlyUnitType: 1
+--- !u!65 &210008173080423322
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7771592090955194750}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2, y: 5, z: 2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8779586971925174051
 GameObject:
   m_ObjectHideFlags: 0

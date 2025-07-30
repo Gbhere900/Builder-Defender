@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
+
 public abstract class AttackBuilding : Building
 {
-    [SerializeField] protected Arrow arrowPrefabs;
+    [SerializeField] protected Bullet bulletPrefabs;
     [SerializeField] protected float arrowSpeed;
 
     [SerializeField] protected float attackCD;
@@ -17,11 +20,11 @@ public abstract class AttackBuilding : Building
     [Header("攻击建筑脚本组件")]
     [SerializeField] protected CapsuleCollider attackCollider;
 
-    protected List<Enemy> attackTargetList;
-    protected Enemy attackTarget;
+    protected List<GameObject> attackTargetList;
+    protected GameObject attackTarget;
 
     
-    IEnumerator WaitForAttackCD()
+    protected IEnumerator WaitForAttackCD()
     {
         yield return new WaitForSeconds(attackCD);
         attackReady = true;
@@ -34,25 +37,28 @@ public abstract class AttackBuilding : Building
 
     private void Awake()
     {
-        attackTargetList = new List<Enemy>();
+        attackTargetList = new List<GameObject>();
     }
 
-    protected virtual void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)     //回血塔重写这个函数
+    {
+        OnTriggerEnterLogic(other);     
+    }
+
+    protected virtual void OnTriggerEnterLogic(Collider other)
     {
         if (other.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
         {
-            Debug.Log(enemy.name);
-            attackTargetList.Add(enemy);
+            attackTargetList.Add(enemy.gameObject);
             enemy.OnDead += OnEnemyDead;
         }
-            
     }
     private void OnEnemyDead(Enemy enemy)
     {
-        if (attackTargetList.Contains(enemy))
+        if (attackTargetList.Contains(enemy.gameObject))
         {
             Debug.Log("PlayerAttack目标的Enemy死亡，将其从攻击目标列表移除");
-            attackTargetList.Remove(enemy);
+            attackTargetList.Remove(enemy.gameObject);
         }
         else
         {
@@ -62,18 +68,23 @@ public abstract class AttackBuilding : Building
 
     }
 
-    protected virtual void OnTriggerExit(Collider other)
+    protected virtual void OnTriggerExit(Collider other)        //回血塔重写这个函数
+    {
+        OnTriggerEnterLogic(other);
+            
+    }
+
+    protected virtual void OnTriggerExitLogic(Collider other)
     {
         if (other.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
         {
             Debug.Log(enemy.name);
-            attackTargetList.Remove(enemy);
+            attackTargetList.Remove(enemy.gameObject);
             enemy.OnDead -= OnEnemyDead;
         }
-            
     }
 
-    private bool TryAttack()
+    protected virtual bool TryAttack()
     {
         if (!attackReady)
             return false;
@@ -118,13 +129,13 @@ public abstract class AttackBuilding : Building
 
     protected virtual void Attack()
     {
-        ShootArrow();           
+        ShootBullet();           
     }
 
-    private void ShootArrow()
+    private void ShootBullet()
     {
-        Arrow arrow = ObjectPoolManager.Instance().GetObject(arrowPrefabs.gameObject).GetComponent<Arrow>();
+        Bullet bullet = ObjectPoolManager.Instance().GetObject(bulletPrefabs.gameObject).GetComponent<Bullet>();
         // Arrow arrow = GameObject.Instantiate(arrowPrefabs,shootPoint);//对象池实现后重构
-        arrow.Initialize(shootPoint.position, attackTarget, damage, arrowSpeed);        //arrow换成投射物父类
+        bullet.Initialize(shootPoint.position, attackTarget, damage, arrowSpeed);        //arrow换成投射物父类
     }
 }

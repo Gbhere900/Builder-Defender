@@ -26,7 +26,7 @@ public class PlayerAttack : MonoBehaviour
     {
         Arrow arrow = ObjectPoolManager.Instance().GetObject(arrowPrefab.gameObject).GetComponent<Arrow>();
         // Arrow arrow = GameObject.Instantiate(arrowPrefabs,shootPoint);//对象池实现后重构
-        arrow.Initialize(shootPoint.position, attackTarget, damage, arrowSpeed,arrowTimeToLive);
+        arrow.Initialize(shootPoint.position, attackTarget.gameObject, damage, arrowSpeed,arrowTimeToLive);
 
         canAttack = false;
         StartCoroutine(WaitForAttackCD());
@@ -56,7 +56,7 @@ public class PlayerAttack : MonoBehaviour
     {
         if(other.TryGetComponent<Enemy>(out Enemy enemy))
         {
-            Debug.Log(enemy.gameObject.name + "进入范围");
+            Debug.Log(enemy.gameObject.name + "进入玩家攻击范围");
             attackTargetList.Add(enemy);
             enemy.OnDead += OnEnemyDead;
 

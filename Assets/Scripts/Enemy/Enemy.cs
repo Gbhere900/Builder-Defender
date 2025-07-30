@@ -67,7 +67,7 @@ public class Enemy : MonoBehaviour
     private void OnCollisionStay(Collision collision)
     {
         if (!attackReady) return;
-        if (collision.gameObject.GetComponent<PlayerHealth>())       //等待重构
+        if (collision.gameObject.GetComponent<FriendlyUnitHealth>())       //等待重构
             Attack();
 
     }
@@ -80,7 +80,7 @@ public class Enemy : MonoBehaviour
     private void Attack()
     {
         attackReady = false;
-        aimFriendlyUnit.GetComponent<PlayerHealth>().ReceiveDamage(damageToPlayer);         //等待重构，用触发器控制造成伤害
+        aimFriendlyUnit.GetComponent<FriendlyUnitHealth>().ReceiveDamage(damageToPlayer);         //等待重构，用触发器控制造成伤害
         StartCoroutine(WaitForAttackCD());
     }
 
@@ -144,7 +144,8 @@ public class Enemy : MonoBehaviour
                 {
                     continue;
                 }
-                    
+
+                //Debug.Log("敌人距离" + friendlyObjectList[i].name +"的距离为" + Vector3.Distance(transform.position, friendlyObjectList[i].transform.position));
                 if (Vector3.Distance(transform.position, friendlyObjectList[i].transform.position) < minDistance)
                 {
                     minDistance = Vector3.Distance(transform.position, friendlyObjectList[i].transform.position);

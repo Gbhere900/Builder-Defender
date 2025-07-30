@@ -94,7 +94,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 048294337bdd76546ad7fd6b4f3c7844, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToLive: 3
+  height: 3
+  timeToLive: 8
   heightOffsetCurve:
     serializedVersion: 2
     m_Curve:
