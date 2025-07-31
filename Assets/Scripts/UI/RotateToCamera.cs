@@ -6,10 +6,13 @@ using UnityEngine;
 public class RotateToCamera : MonoBehaviour
 {
     [SerializeField] private CinemachineVirtualCameraBase activeVirtualCamera;
+    [SerializeField] private float cameraOffset = 1;
+    [SerializeField] private float heightOffset = 5;
 
-    private void Awake()
+    private void OnEnable()
     {
         activeVirtualCamera = GameObject.FindGameObjectWithTag("VirtualCamera").GetComponent<CinemachineVirtualCamera>();
+       
     }
 
     // Update is called once per frame
@@ -23,7 +26,8 @@ public class RotateToCamera : MonoBehaviour
         //if (activeVirtualCamera == null)
         //    Debug.LogError("activeVirtualCamera ЮЊПе");
         //healthBar.transform.up = activeVirtualCamera.gameObject.transform.position - healthBar.transform.position;
-
+        transform.position = gameObject.transform.parent.transform.position
+            + activeVirtualCamera.transform.up * cameraOffset + Vector3.up * heightOffset;
         transform.forward = activeVirtualCamera.transform.position - transform.position;
         transform.right = activeVirtualCamera.transform.up;
         // healthBar.transform.forward = - Camera.main.transform.right;

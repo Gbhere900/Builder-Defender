@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 2545314786659740261}
   - component: {fileID: 5200365033506251645}
   - component: {fileID: 868045306307304928}
+  - component: {fileID: 7870122815725268829}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Untagged
@@ -220,11 +221,12 @@ MonoBehaviour:
   originalMaxHealth: 200
   MaxHealth: 0
   health: 0
-  originalSpeed: 10
+  originalSpeed: 40
   originalDamageToUnit: 5
   originalDamageToPlayer: 5
   originalDamageToBuilding: 5
-  attackCD: 0
+  originalDamageToHero: 0
+  attackCD: 0.5
   collider: {fileID: 0}
   rigidbody: {fileID: 0}
 --- !u!114 &2545314786659740261
@@ -290,6 +292,29 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!136 &7870122815725268829
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2349787872832055588}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.8
+  m_Height: 7.65
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3728505990479139901
 GameObject:
   m_ObjectHideFlags: 0
@@ -489,6 +514,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeVirtualCamera: {fileID: 0}
+  offset: 0.5
 --- !u!1 &6642583524515886955
 GameObject:
   m_ObjectHideFlags: 0

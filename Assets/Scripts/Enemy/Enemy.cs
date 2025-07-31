@@ -26,6 +26,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float originalDamageToBuilding;
     private float damageToBuilding;
 
+    [SerializeField] private float originalDamageToHero;
+    private float damageToHero;
+
     [SerializeField] private float attackCD;
 
     private FriendlyOBject aimFriendlyUnit;
@@ -64,23 +67,55 @@ public class Enemy : MonoBehaviour
         Move();
     }
 
-    private void OnCollisionStay(Collision collision)
+    //private void OnCollisionStay(Collision collision)
+    //{
+    //    if (!attackReady) return;
+    //    if (collision.gameObject.GetComponent<FriendlyUnitHealth>())       //等待重构
+    //        Attack();
+
+    //}
+
+    private void OnTriggerStay(Collider other)
     {
         if (!attackReady) return;
-        if (collision.gameObject.GetComponent<FriendlyUnitHealth>())       //等待重构
-            Attack();
+        if (other.isTrigger)
+            return;
+        if (other.gameObject.GetComponent<FriendlyUnitHealth>())       //等待重构
+            Attack(other.GetComponent<FriendlyUnitHealth>());
 
+        else if(other.gameObject.GetComponent<Building>())
+            Attack(other.GetComponent<Building>());
     }
 
     private void Move()
     {
-        Vector3 direction = aimFriendlyUnit.transform.position - transform.position;
+        Vector3 direction = (aimFriendlyUnit.transform.position - transform.position).normalized;
         rigidbody.velocity = direction * Time.deltaTime * speed;
     }
-    private void Attack()
+    private void Attack(FriendlyUnitHealth friendlyUnitHealth)
     {
         attackReady = false;
-        aimFriendlyUnit.GetComponent<FriendlyUnitHealth>().ReceiveDamage(damageToPlayer);         //等待重构，用触发器控制造成伤害
+        switch (friendlyUnitHealth.GetFriendlyUnitType())
+        {
+            case (FriendlyUnitType.Unit):
+                friendlyUnitHealth.ReceiveDamage(damageToUnit);
+                break;
+            case (FriendlyUnitType.Player):
+                friendlyUnitHealth.ReceiveDamage(damageToPlayer);
+                break;
+            case (FriendlyUnitType.Hero):
+                friendlyUnitHealth.ReceiveDamage(damageToHero);
+                break;
+        }
+
+        StartCoroutine(WaitForAttackCD());
+    }
+
+    private void Attack(Building building)
+    {
+        attackReady = false;
+        building.ReceiveDamage(damageToBuilding);
+
         StartCoroutine(WaitForAttackCD());
     }
 

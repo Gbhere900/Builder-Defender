@@ -8,6 +8,7 @@ public class FriendlyUnitHealth : MonoBehaviour
 {
     [SerializeField] private float maxHealth;
     [SerializeField] private float health;
+    [SerializeField] private FriendlyUnitType friendlyUnitType;
     private bool isDead = false;
 
     public Action<FriendlyUnitHealth> OnDead;
@@ -53,5 +54,10 @@ public class FriendlyUnitHealth : MonoBehaviour
     public float GetMaxHealth()
     {
         return maxHealth;
+    }
+
+    public FriendlyUnitType GetFriendlyUnitType()
+    {
+        return friendlyUnitType;
     }
 }

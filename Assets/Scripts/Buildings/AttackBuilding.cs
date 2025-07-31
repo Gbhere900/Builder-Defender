@@ -175,5 +175,6 @@ public abstract class AttackBuilding : Building
         this.attackCD = attackCD;
         this.arrowSpeed = arrowSpeed;
         attackCollider.radius = attackRange;
+        health = maxHealth;
     }
 }

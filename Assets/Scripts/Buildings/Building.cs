@@ -22,6 +22,8 @@ public abstract class Building : MonoBehaviour
 
     [SerializeField] protected Rigidbody rigidbody;
 
+    public Action OnHealthChanged;
+
     protected virtual void Awake()              //后面的Awake和Onenabe记得base
     {
         rigidbody = GetComponent<Rigidbody>();
@@ -34,7 +36,8 @@ public abstract class Building : MonoBehaviour
 
     public void ReceiveDamage(float damage)
     {
-        health -= Math.Max(health, damage);
+        health -= Math.Min(health, damage);
+        OnHealthChanged.Invoke();
         if(health <= 0)
         {
             Die();
@@ -44,5 +47,16 @@ public abstract class Building : MonoBehaviour
     public virtual void Die()
     {
         Destroy(gameObject);    //等待重构
+    }
+
+    public float GetMaxHealth()
+    {
+
+        return maxHealth; 
+    }
+
+    public float GetHealth()
+    {
+        return health;
     }
 }

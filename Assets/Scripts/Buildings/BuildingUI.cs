@@ -1,0 +1,37 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class BuildingUI : MonoBehaviour
+{
+    [SerializeField] private Image healthBar;
+    [SerializeField] private Building building;
+
+    private void OnEnable()
+    {
+        Initialize();
+        building.OnHealthChanged += Building_OnHealthChanged;
+    }
+    private void OnDisable()
+    {
+        building.OnHealthChanged -= Building_OnHealthChanged;
+    }
+
+
+    private void Building_OnHealthChanged()
+    {
+        UpdateHealthBar();
+    }
+
+    private void UpdateHealthBar()
+    {
+        healthBar.fillAmount = building.GetHealth() / building.GetMaxHealth();
+    }
+
+
+    private void Initialize()
+    {
+        building = GetComponent<Building>();
+    }
+}
