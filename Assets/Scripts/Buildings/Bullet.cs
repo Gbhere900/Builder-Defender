@@ -31,7 +31,12 @@ public class Bullet : MonoBehaviour
         yield return new WaitForSeconds(timeToLive);
         ObjectPoolManager.Instance().ReleaseObject(gameObject);
     }
-    protected virtual void  OnTriggerEnter(Collider other)          //子类可以重写
+    protected  void  OnTriggerEnter(Collider other)          //子类可以重写
+    {
+        OnTriggerEnterLogic(other);
+    }
+
+    protected virtual void OnTriggerEnterLogic(Collider other)
     {
         if (other.TryGetComponent<Enemy>(out Enemy enemy))
         {
@@ -49,7 +54,6 @@ public class Bullet : MonoBehaviour
             ObjectPoolManager.Instance().ReleaseObject(gameObject);
         }
     }
-
 
 
 

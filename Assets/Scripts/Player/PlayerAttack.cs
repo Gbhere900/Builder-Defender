@@ -54,7 +54,9 @@ public class PlayerAttack : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.TryGetComponent<Enemy>(out Enemy enemy))
+        if (other.isTrigger)         //排除是触发器进入的情况
+            return;
+        if (other.TryGetComponent<Enemy>(out Enemy enemy))
         {
             Debug.Log(enemy.gameObject.name + "进入玩家攻击范围");
             attackTargetList.Add(enemy);
@@ -85,7 +87,9 @@ public class PlayerAttack : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if(other.TryGetComponent<Enemy>(out Enemy enemy))
+        if (other.isTrigger)         //排除是触发器进入的情况
+            return;
+        if (other.TryGetComponent<Enemy>(out Enemy enemy))
         {
             Debug.Log(enemy.gameObject.name + "离开范围");
             attackTargetList.Remove(enemy);

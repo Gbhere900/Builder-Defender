@@ -40,13 +40,15 @@ public abstract class AttackBuilding : Building
         attackTargetList = new List<GameObject>();
     }
 
-    protected virtual void OnTriggerEnter(Collider other)     //回血塔重写这个函数
+    protected void OnTriggerEnter(Collider other)     //回血塔重写这个函数
     {
         OnTriggerEnterLogic(other);     
     }
 
     protected virtual void OnTriggerEnterLogic(Collider other)
     {
+        if(other.isTrigger)         //排除是触发器进入的情况
+            return ;
         if (other.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
         {
             attackTargetList.Add(enemy.gameObject);
@@ -68,14 +70,16 @@ public abstract class AttackBuilding : Building
 
     }
 
-    protected virtual void OnTriggerExit(Collider other)        //回血塔重写这个函数
+    protected void OnTriggerExit(Collider other)        //回血塔重写这个函数
     {
-        OnTriggerEnterLogic(other);
+        OnTriggerExitLogic(other);
             
     }
 
     protected virtual void OnTriggerExitLogic(Collider other)
     {
+        if (other.isTrigger)         //排除是触发器进入的情况
+            return;
         if (other.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
         {
             Debug.Log(enemy.name);
@@ -107,6 +111,7 @@ public abstract class AttackBuilding : Building
     }
 
 
+
     public void LevelUP_L2(int index)
     {
         maxHealth += LevelUPEnhance_L2[index].maxHealthEnhance;
@@ -134,8 +139,8 @@ public abstract class AttackBuilding : Building
 
     private void ShootBullet()
     {
+        Debug.LogWarning(bulletPrefabs.name);
         Bullet bullet = ObjectPoolManager.Instance().GetObject(bulletPrefabs.gameObject).GetComponent<Bullet>();
-        // Arrow arrow = GameObject.Instantiate(arrowPrefabs,shootPoint);//对象池实现后重构
         bullet.Initialize(shootPoint.position, attackTarget, damage, arrowSpeed);        //arrow换成投射物父类
     }
 }

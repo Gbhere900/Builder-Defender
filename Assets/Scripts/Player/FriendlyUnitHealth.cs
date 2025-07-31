@@ -11,10 +11,12 @@ public class FriendlyUnitHealth : MonoBehaviour
     private bool isDead = false;
 
     public Action<FriendlyUnitHealth> OnDead;
+    public Action OnHealthChanged;    //应该像上面一样不需要带参数，后续需要再加
     public void ReceiveDamage(float damage)
     {
         Debug.Log("友方单位收到伤害" + damage);
         health -= Math.Max(damage,health);
+        OnHealthChanded.Invoke();
         if(health <= 0)
         {
             Die();
@@ -39,5 +41,16 @@ public class FriendlyUnitHealth : MonoBehaviour
     public bool IsFullHealth()
     {
         return health >= maxHealth;
+    }
+
+
+    public float GetHealth()
+    {
+        return health;
+    }
+
+    public float GetMaxHealth()
+    {
+        return maxHealth;
     }
 }

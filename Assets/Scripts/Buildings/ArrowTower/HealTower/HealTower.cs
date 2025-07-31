@@ -6,16 +6,19 @@ public class HealTower : AttackBuilding
 {
     protected override void OnTriggerEnterLogic(Collider other)
     {
-        if (other.gameObject.TryGetComponent<FriendlyUnitHealth>(out FriendlyUnitHealth friendlyHealth))  
+        if (other.isTrigger)         //排除是触发器进入的情况
+            return;
+        if (other.gameObject.TryGetComponent<FriendlyUnitHealth>(out FriendlyUnitHealth friendlyUnitHealth))
         {
-            Debug.Log(friendlyHealth.name);
-            attackTargetList.Add(friendlyHealth.gameObject);
-            friendlyHealth.OnDead += OnFriendlyUnitDead;
+            attackTargetList.Add(friendlyUnitHealth.gameObject);
+            friendlyUnitHealth.OnDead += OnFriendlyUnitDead;
         }
     }
 
     protected override void OnTriggerExitLogic(Collider other)
     {
+        if (other.isTrigger)         //排除是触发器进入的情况
+            return;
         if (other.gameObject.TryGetComponent<FriendlyUnitHealth>(out FriendlyUnitHealth friendlyHealth))
         {
             Debug.Log(friendlyHealth.name);
@@ -23,6 +26,7 @@ public class HealTower : AttackBuilding
             friendlyHealth.OnDead -= OnFriendlyUnitDead;
         }
     }
+
 
     private void OnFriendlyUnitDead(FriendlyUnitHealth friendUnitHealth)  ////新增兵种时重构
     {

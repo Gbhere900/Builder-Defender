@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class HealBullet : Bullet
 {
-    protected override void OnTriggerEnter(Collider other)
+
+    protected override void OnTriggerEnterLogic(Collider other)
     {
         if (other.TryGetComponent<FriendlyUnitHealth>(out FriendlyUnitHealth friendlyUnitHealth))
         {
@@ -13,7 +14,7 @@ public class HealBullet : Bullet
                 friendlyUnitHealth.ReceiveHealing(damage);
                 ObjectPoolManager.Instance().ReleaseObject(gameObject);
             }
-            
+
         }
 
         //if (other.gameObject.tag == "Gound")        //后续可能重构
@@ -26,4 +27,5 @@ public class HealBullet : Bullet
             ObjectPoolManager.Instance().ReleaseObject(gameObject);
         }
     }
+
 }
