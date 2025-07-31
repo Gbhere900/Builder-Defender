@@ -7,6 +7,11 @@ public class RotateToCamera : MonoBehaviour
 {
     [SerializeField] private CinemachineVirtualCameraBase activeVirtualCamera;
 
+    private void Awake()
+    {
+        activeVirtualCamera = GameObject.FindGameObjectWithTag("VirtualCamera").GetComponent<CinemachineVirtualCamera>();
+    }
+
     // Update is called once per frame
     void Update()
     {

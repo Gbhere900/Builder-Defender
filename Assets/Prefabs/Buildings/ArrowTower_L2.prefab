@@ -131,9 +131,9 @@ MonoBehaviour:
   bulletPrefabs: {fileID: 9009959369473065244, guid: 7f9316223ea96054a951eaa20348c0c2,
     type: 3}
   arrowSpeed: 3
+  attackRange: 10
   attackCD: 1
   attackReady: 1
-  originalDamage: 10
   damage: 10
   shootPoint: {fileID: 1600404311833415955}
   attackCollider: {fileID: 7784479406231682555}

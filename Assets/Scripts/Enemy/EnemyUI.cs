@@ -8,7 +8,6 @@ public class EnemyUI : MonoBehaviour
 {
     [SerializeField] private Image healthBar;
     private Enemy enemy;
-    private CinemachineBrain brain;
 
     private void OnEnable()
     {

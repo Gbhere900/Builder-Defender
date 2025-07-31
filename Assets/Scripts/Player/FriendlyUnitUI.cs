@@ -8,7 +8,6 @@ public class FriendlyUnitUI : MonoBehaviour
 {
     [SerializeField] private Image healthBar;
     private FriendlyUnitHealth friendlyUnitHealth;
-    private CinemachineBrain brain;
 
     private void OnEnable()
     {

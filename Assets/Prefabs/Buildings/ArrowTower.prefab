@@ -917,15 +917,17 @@ MonoBehaviour:
   health: 150
   currentLevel: 1
   maxLevel: 3
-  LevelUPEnhance_L2: []
+  LevelUPEnhance_L2:
+  - {fileID: 11400000, guid: ac72a2c3e8adeaa4d95cdc39631b6c04, type: 2}
+  - {fileID: 11400000, guid: fb5a0670b5ada634baa426a02d02c1d5, type: 2}
   LevelUPEnhance_L3: []
   rigidbody: {fileID: 751450592037406380}
   bulletPrefabs: {fileID: 9009959369473065244, guid: 7f9316223ea96054a951eaa20348c0c2,
     type: 3}
   arrowSpeed: 3
+  attackRange: 10
   attackCD: 1
   attackReady: 1
-  originalDamage: 10
   damage: 10
   shootPoint: {fileID: 8371179513106289366}
   attackCollider: {fileID: 1101771844778436425}

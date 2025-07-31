@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45205ffaa4784394b8019f2e54b0521b, type: 3}
+  m_Name: Arrow_L2_ArrowTower_LevelUpEnhanceData
+  m_EditorClassIdentifier: 
+  description: "\u6CDB\u7528\u6027\u5F88\u5F3A\u7684\u5F13\u7BAD\u5854\u5347\u7EA7\u5206\u652F"
+  maxHealthEnhance: 150
+  damageEnhance: 50
+  attackRangeEnhance: 50
+  attackSpeedEnhance: 30
+  arrowSpeedEnhance: 50
+  LevelUpBuilding: {fileID: 5180894541240015711, guid: 6677a48c459b9704cbcb2536ec4e2e38,
+    type: 3}

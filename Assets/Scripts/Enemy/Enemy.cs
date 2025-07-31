@@ -100,7 +100,7 @@ public class Enemy : MonoBehaviour
     public void Die()
     {
         ObjectPoolManager.Instance().ReleaseObject(this.gameObject);  
-        OnDead.Invoke(this);
+        OnDead?.Invoke(this);
     }
     private void Initialize()
     {

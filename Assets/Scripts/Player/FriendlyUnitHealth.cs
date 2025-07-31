@@ -15,8 +15,8 @@ public class FriendlyUnitHealth : MonoBehaviour
     public void ReceiveDamage(float damage)
     {
         Debug.Log("友方单位收到伤害" + damage);
-        health -= Math.Max(damage,health);
-        OnHealthChanded.Invoke();
+        health -= Math.Min(damage,health);
+        OnHealthChanged.Invoke();
         if(health <= 0)
         {
             Die();
@@ -35,6 +35,7 @@ public class FriendlyUnitHealth : MonoBehaviour
     {
         Debug.Log("友方单位收到治疗" + damage);
         health = Math.Min(maxHealth, health + damage);
+        OnHealthChanged.Invoke();
         
     }
 

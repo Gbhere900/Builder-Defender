@@ -38,11 +38,18 @@ public class Bullet : MonoBehaviour
 
     protected virtual void OnTriggerEnterLogic(Collider other)
     {
-        if (other.TryGetComponent<Enemy>(out Enemy enemy))
+        if (other.isTrigger)
+            return;
+        if(other.gameObject == attackTarget)
         {
-            enemy.ReceiveDamage(damage);
+            attackTarget.GetComponent<Enemy>().ReceiveDamage(damage);
             ObjectPoolManager.Instance().ReleaseObject(gameObject);
         }
+        //if (other.TryGetComponent<Enemy>(out Enemy enemy))
+        //{
+        //    enemy.ReceiveDamage(damage);
+        //    ObjectPoolManager.Instance().ReleaseObject(gameObject);
+        //}
 
         //if (other.gameObject.tag == "Gound")        //后续可能重构
         //{

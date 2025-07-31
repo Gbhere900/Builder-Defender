@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Gound
+  - VirtualCamera
   layers:
   - Default
   - TransparentFX

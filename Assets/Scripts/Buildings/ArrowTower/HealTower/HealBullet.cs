@@ -7,15 +7,21 @@ public class HealBullet : Bullet
 
     protected override void OnTriggerEnterLogic(Collider other)
     {
-        if (other.TryGetComponent<FriendlyUnitHealth>(out FriendlyUnitHealth friendlyUnitHealth))
-        {
-            if (!friendlyUnitHealth.IsFullHealth())
-            {
-                friendlyUnitHealth.ReceiveHealing(damage);
-                ObjectPoolManager.Instance().ReleaseObject(gameObject);
-            }
+        if (other.isTrigger)
+            return;
 
+        if (other.gameObject == attackTarget)
+        {
+            attackTarget.GetComponent<FriendlyUnitHealth>().ReceiveHealing(damage);
+            ObjectPoolManager.Instance().ReleaseObject(gameObject);
         }
+
+        //if (other.TryGetComponent<FriendlyUnitHealth>(out FriendlyUnitHealth friendlyUnitHealth))       
+        //{
+
+        //     friendlyUnitHealth.ReceiveHealing(damage);
+        //     ObjectPoolManager.Instance().ReleaseObject(gameObject);
+        //}
 
         //if (other.gameObject.tag == "Gound")        //后续可能重构
         //{

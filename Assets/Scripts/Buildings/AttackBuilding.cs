@@ -9,10 +9,10 @@ public abstract class AttackBuilding : Building
 {
     [SerializeField] protected Bullet bulletPrefabs;
     [SerializeField] protected float arrowSpeed;
-
+    [SerializeField] protected float attackRange;
     [SerializeField] protected float attackCD;
     [SerializeField] protected bool attackReady = true;
-    [SerializeField] protected float originalDamage;
+    //[SerializeField] protected float originalDamage;        加入Buff系统后重构
     [SerializeField] protected float damage;
 
     [SerializeField] protected Transform shootPoint;
@@ -35,10 +35,19 @@ public abstract class AttackBuilding : Building
         TryAttack();
     }
 
-    private void Awake()
-    {
+    protected override void Awake()             //后面的Awake和Onenabe记得base
+    {   
+        base.Awake();
         attackTargetList = new List<GameObject>();
+       
     }
+
+    protected override void OnEnable()              //后面的Awake和Onenabe记得base
+    {
+        base.OnEnable();
+        attackCollider.radius = attackRange;                //初始化时也需要使  attackCollider.radius = attackRange;   
+    }
+
 
     protected void OnTriggerEnter(Collider other)     //回血塔重写这个函数
     {
@@ -112,23 +121,37 @@ public abstract class AttackBuilding : Building
 
 
 
-    public void LevelUP_L2(int index)
+    public void LevelUP_L2(int choice)
     {
+        int index= choice - 1;
         maxHealth += LevelUPEnhance_L2[index].maxHealthEnhance;
-        damage *= (1 + LevelUPEnhance_L2[index].damageEnhance);
-        attackCollider.radius *= (1 + LevelUPEnhance_L2[index].attackRangeEnhance);
-        attackCD = attackCD / (1 + LevelUPEnhance_L2[index].attackSpeedEnhance);
-        arrowSpeed *= (1 + LevelUPEnhance_L2[index].arrowSpeedEnhance);
+        damage *= (1 + LevelUPEnhance_L2[index].damageEnhance/100);
+        attackRange *= (1 + LevelUPEnhance_L2[index].attackRangeEnhance/100);
+        attackCD = attackCD / (1 + LevelUPEnhance_L2[index].attackSpeedEnhance/100);
+        arrowSpeed *= (1 + LevelUPEnhance_L2[index].arrowSpeedEnhance/100);
+
+        AttackBuilding LevelUPBuilding =  GameObject.Instantiate
+            (LevelUPEnhance_L2[index].LevelUpBuilding, transform.position, Quaternion.identity);
+        LevelUPBuilding.Initialize(maxHealth,damage,attackRange,attackCD,arrowSpeed);                   
+        Destroy(this.gameObject);                   //
+
         Debug.Log("升级到2级，选项为" + index);
     }
 
-    public void LevelUP_L3(int index)
+    public void LevelUP_L3(int choice)
     {
+        int index = choice - 1;
         maxHealth += LevelUPEnhance_L3[index].maxHealthEnhance;
-        damage *= (1 + LevelUPEnhance_L3[index].damageEnhance);
-        attackCollider.radius *= (1 + LevelUPEnhance_L3[index].attackRangeEnhance);
-        attackCD = attackCD / (1 + LevelUPEnhance_L3[index].attackSpeedEnhance);
-        arrowSpeed *= (1 + LevelUPEnhance_L3[index].arrowSpeedEnhance);
+        damage *= (1 + LevelUPEnhance_L3[index].damageEnhance/100);
+        attackCollider.radius *= (1 + LevelUPEnhance_L3[index].attackRangeEnhance/100);
+        attackCD = attackCD / (1 + LevelUPEnhance_L3[index].attackSpeedEnhance/100);
+        arrowSpeed *= (1 + LevelUPEnhance_L3[index].arrowSpeedEnhance/100);
+
+        AttackBuilding LevelUPBuilding = GameObject.Instantiate
+    (LevelUPEnhance_L3[index].LevelUpBuilding, transform.position, Quaternion.identity);
+        LevelUPBuilding.Initialize(maxHealth, damage, attackRange, attackCD, arrowSpeed);
+
+        Destroy(this.gameObject);
         Debug.Log("升级到3级，选项为" + index);
     }
 
@@ -142,5 +165,15 @@ public abstract class AttackBuilding : Building
         Debug.LogWarning(bulletPrefabs.name);
         Bullet bullet = ObjectPoolManager.Instance().GetObject(bulletPrefabs.gameObject).GetComponent<Bullet>();
         bullet.Initialize(shootPoint.position, attackTarget, damage, arrowSpeed);        //arrow换成投射物父类
+    }
+
+    public void Initialize(float maxHealth, float damage,float attackRange, float attackCD, float arrowSpeed)   //后续增加建设点时再重构
+    {
+        this.maxHealth = maxHealth;
+        this.damage = damage;
+        this.attackRange = attackRange;
+        this.attackCD = attackCD;
+        this.arrowSpeed = arrowSpeed;
+        attackCollider.radius = attackRange;
     }
 }

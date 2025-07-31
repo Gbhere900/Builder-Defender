@@ -5,7 +5,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "LevelUpEnhanceData", menuName = "ScriptableObjects", order = 0)]
 
-public class LevelUpEnhance : ScriptableObject
+public class LevelUpEnhance_AttackBuilding : ScriptableObject
 {
     //[SerializeField] public Mesh newMesh;
     [SerializeField] public string description;
@@ -14,5 +14,6 @@ public class LevelUpEnhance : ScriptableObject
     [SerializeField] public float attackRangeEnhance;
     [SerializeField] public float attackSpeedEnhance;
     [SerializeField] public float arrowSpeedEnhance;
-    [SerializeField] public GameObject LevelUpBuilding;
+
+    [SerializeField] public AttackBuilding LevelUpBuilding;
 }

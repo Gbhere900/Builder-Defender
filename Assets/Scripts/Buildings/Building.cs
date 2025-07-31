@@ -15,16 +15,21 @@ public abstract class Building : MonoBehaviour
     [SerializeField] protected int maxLevel = 2;
 
     [Header("升级数值")]
-    [SerializeField] protected List<LevelUpEnhance> LevelUPEnhance_L2;
-    [SerializeField] protected List<LevelUpEnhance> LevelUPEnhance_L3;
+    [SerializeField] protected List<LevelUpEnhance_AttackBuilding> LevelUPEnhance_L2;
+    [SerializeField] protected List<LevelUpEnhance_AttackBuilding> LevelUPEnhance_L3;
 
     [Header("建筑通用脚本组件")]
 
     [SerializeField] protected Rigidbody rigidbody;
 
-    private void Awake()
+    protected virtual void Awake()              //后面的Awake和Onenabe记得base
     {
         rigidbody = GetComponent<Rigidbody>();
+    }
+
+    protected virtual void OnEnable()           //后面的Awake和Onenabe记得base
+    {
+
     }
 
     public void ReceiveDamage(float damage)
