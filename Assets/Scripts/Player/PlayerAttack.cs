@@ -51,7 +51,7 @@ public class PlayerAttack : MonoBehaviour
         SetEnemyAtIndexAsAttackTarget(attackIndex);
         
     }
-
+    //玩家的索敌逻辑是，当第一个敌人进入时直接锁定，点击鼠标切换锁定，当目前目标死亡和离开攻击范围时切换锁定最近敌人
     private void OnTriggerEnter(Collider other)
     {
         if (other.isTrigger)         //排除是触发器进入的情况

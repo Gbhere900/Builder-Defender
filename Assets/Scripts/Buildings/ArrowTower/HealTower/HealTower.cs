@@ -59,7 +59,7 @@ public class HealTower : AttackBuilding
         }
 
         attackTarget = attackTargetList[0];
-        Attack();
+        AttackAttackTarget();
         attackReady = false;
         StartCoroutine(WaitForAttackCD());
         return true;

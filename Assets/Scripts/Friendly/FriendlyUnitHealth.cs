@@ -27,7 +27,7 @@ public class FriendlyUnitHealth : MonoBehaviour
     public virtual void Die()       //后面可能改成抽象类
     {
         isDead = true;
-        OnDead.Invoke(this);
+        OnDead?.Invoke(this);
         Debug.Log("玩家死亡");
     }
 

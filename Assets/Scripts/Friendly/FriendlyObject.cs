@@ -7,7 +7,7 @@ using UnityEngine;
 public class FriendlyOBject : MonoBehaviour
 {
     [SerializeField] private FriendlyUnitType friendlyUnitType;
-    public Action OnDestroyed;
+    public Action<FriendlyOBject> OnDestroyed;
     private void OnEnable()
     {
         Debug.Log("将激活的FriendlyObject放入列表");
@@ -17,7 +17,7 @@ public class FriendlyOBject : MonoBehaviour
     private void OnDisable()
     {
         FriendlyOBjectManager.Instance().RemoveFriendlyObject(this);
-        OnDestroyed?.Invoke();
+        OnDestroyed?.Invoke(this);
     }
 
 

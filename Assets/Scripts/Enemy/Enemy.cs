@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.UI.CanvasScaler;
 
 public class Enemy : MonoBehaviour
 {
@@ -35,24 +36,24 @@ public class Enemy : MonoBehaviour
     private bool attackReady = true;
 
 
+    [SerializeField]private List<FriendlyOBject> FriendlyObjectInAttackRange;
+
     [Header("脚本组件")]
-    [SerializeField] private Collider collider;
     [SerializeField] private Rigidbody rigidbody;
 
     //事件
     public Action OnHealthChanged;
     public Action<Enemy> OnDead;
 
+
     private void Awake()
     {
-        
-       // AimFriendlyUnit = GameObject.FindFirstObjectByType<PlayerHealth>(); //需要重构
+        FriendlyObjectInAttackRange = new List<FriendlyOBject>();
     }
 
     private void OnEnable()
     {
         Initialize();
-        SetAimFriendlyUnit();
     }
 
     IEnumerator WaitForAttackCD()
@@ -60,11 +61,24 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(attackCD);
         attackReady = true;
     }
+
+    private void Update()
+    {
+        SetAimFriendlyUnit();
+        TryAttack();
+    }
+
+    private void TryAttack()
+    {
+        if (!attackReady) return;
+        if (FriendlyObjectInAttackRange.Count == 0)
+            return;
+
+        AttackAimFriendlyUnitOrFirstInRange();
+    }
     private void FixedUpdate()
     {
-        if (aimFriendlyUnit == null)
-            return;
-        Move();
+        TryMove();
     }
 
     //private void OnCollisionStay(Collision collision)
@@ -75,49 +89,94 @@ public class Enemy : MonoBehaviour
 
     //}
 
-    private void OnTriggerStay(Collider other)
+
+
+    private void OnTriggerEnter(Collider other)
     {
-        if (!attackReady) return;
         if (other.isTrigger)
             return;
-        if (other.gameObject.GetComponent<FriendlyUnitHealth>())       //等待重构
-            Attack(other.GetComponent<FriendlyUnitHealth>());
 
-        else if(other.gameObject.GetComponent<Building>())
-            Attack(other.GetComponent<Building>());
+        if (other.gameObject.TryGetComponent<FriendlyOBject>(out FriendlyOBject friendlyObject))
+        {
+            FriendlyObjectInAttackRange.Add(friendlyObject);
+            friendlyObject.OnDestroyed += OnFriendlyUnitDead;
+        }
     }
 
+    private void OnFriendlyUnitDead(FriendlyOBject friendlyOBject)
+    {
+        if (FriendlyObjectInAttackRange.Contains(friendlyOBject))
+        {
+            Debug.Log("PlayerAttack目标的Enemy死亡，将其从攻击目标列表移除");
+            FriendlyObjectInAttackRange.Remove(friendlyOBject);
+        }
+        else
+        {
+            Debug.LogWarning("敌人不在PlayerAttack列表中时死亡事件触发，说明敌人在离开玩家攻击范围后未取消订阅事件，现在执行取消订阅");
+            friendlyOBject.OnDestroyed -= OnFriendlyUnitDead;
+        }
+
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.isTrigger)
+            return;
+
+        if (other.gameObject.TryGetComponent<FriendlyOBject>(out FriendlyOBject friendlyObject))
+        {
+            FriendlyObjectInAttackRange.Remove(friendlyObject);
+            friendlyObject.OnDestroyed -= OnFriendlyUnitDead;
+        }
+    }
+
+    private void TryMove()
+    {
+        rigidbody.velocity = Vector3.zero;
+        if (aimFriendlyUnit == null)
+            return;
+        if (FriendlyObjectInAttackRange.Contains(aimFriendlyUnit))
+            return;
+        Move();
+    }
     private void Move()
     {
         Vector3 direction = (aimFriendlyUnit.transform.position - transform.position).normalized;
         rigidbody.velocity = direction * Time.deltaTime * speed;
     }
-    private void Attack(FriendlyUnitHealth friendlyUnitHealth)
+    
+    private void AttackAimFriendlyUnitOrFirstInRange()
     {
         attackReady = false;
-        switch (friendlyUnitHealth.GetFriendlyUnitType())
+        FriendlyOBject tempFriendlyObject;
+        if (FriendlyObjectInAttackRange.Contains(aimFriendlyUnit))
         {
+            tempFriendlyObject = aimFriendlyUnit;
+        }
+        else
+        {
+            tempFriendlyObject = FriendlyObjectInAttackRange[0];
+        }
+        switch (tempFriendlyObject.GetFriendlyUnitType())
+        {
+
             case (FriendlyUnitType.Unit):
-                friendlyUnitHealth.ReceiveDamage(damageToUnit);
+                tempFriendlyObject.GetComponent<FriendlyUnitHealth>().ReceiveDamage(damageToUnit);
                 break;
             case (FriendlyUnitType.Player):
-                friendlyUnitHealth.ReceiveDamage(damageToPlayer);
+                tempFriendlyObject.GetComponent<FriendlyUnitHealth>().ReceiveDamage(damageToPlayer);
                 break;
             case (FriendlyUnitType.Hero):
-                friendlyUnitHealth.ReceiveDamage(damageToHero);
+                tempFriendlyObject.GetComponent<FriendlyUnitHealth>().ReceiveDamage(damageToHero);
+                break;
+            case (FriendlyUnitType.Building):
+                tempFriendlyObject.GetComponent<Building>().ReceiveDamage(damageToBuilding);
                 break;
         }
 
         StartCoroutine(WaitForAttackCD());
     }
 
-    private void Attack(Building building)
-    {
-        attackReady = false;
-        building.ReceiveDamage(damageToBuilding);
-
-        StartCoroutine(WaitForAttackCD());
-    }
 
     public void ReceiveDamage(float damage)
     {
@@ -147,9 +206,8 @@ public class Enemy : MonoBehaviour
         damageToPlayer = originalDamageToPlayer;
         damageToBuilding = originalDamageToBuilding;
 
-        collider = GetComponent<Collider>();
         rigidbody = GetComponent<Rigidbody>();
-        
+        FriendlyObjectInAttackRange.Clear();
     }
 
     public float GetHealth()
@@ -164,10 +222,6 @@ public class Enemy : MonoBehaviour
 
     private void SetAimFriendlyUnit()
     {
-        if(aimFriendlyUnit !=null)
-        {
-            aimFriendlyUnit.OnDestroyed -= SetAimFriendlyUnit;
-        }
         foreach(FriendlyUnitType friendlyUnitType in aimFriendlyUnitType)
         {
             float minDistance = float.MaxValue;
@@ -191,7 +245,6 @@ public class Enemy : MonoBehaviour
             {
                 aimFriendlyUnit = friendlyObjectList[index];
                 Debug.Log(gameObject.name + "已找到目标\n"+ aimFriendlyUnit.gameObject.name);
-                aimFriendlyUnit.OnDestroyed +=  SetAimFriendlyUnit;
                 return;
             }
         }
@@ -200,4 +253,6 @@ public class Enemy : MonoBehaviour
         Debug.LogWarning(gameObject.name + "未找到目标");
         
     }
+
+
 }

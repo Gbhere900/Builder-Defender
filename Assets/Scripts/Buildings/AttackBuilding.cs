@@ -32,6 +32,7 @@ public abstract class AttackBuilding : Building
 
     private void Update()
     {
+        SetClosestEnemyInDetectRangeAsAimEnemy();
         TryAttack();
     }
 
@@ -91,12 +92,11 @@ public abstract class AttackBuilding : Building
             return;
         if (other.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
         {
-            Debug.Log(enemy.name);
             attackTargetList.Remove(enemy.gameObject);
             enemy.OnDead -= OnEnemyDead;
         }
     }
-
+    
     protected virtual bool TryAttack()
     {
         if (!attackReady)
@@ -106,14 +106,14 @@ public abstract class AttackBuilding : Building
             return false;
             
         }
-        if (attackTargetList[0] == null)
-        {
-            attackTargetList.RemoveAt(0);
-            return false;
-        }
+        //if (attackTargetList[0] == null)
+        //{
+        //    attackTargetList.RemoveAt(0);
+        //    return false;
+        //}
 
-        attackTarget = attackTargetList[0];
-        Attack();
+                 //先设置attackTarget再Attack;
+        AttackAttackTarget();
         attackReady = false;
         StartCoroutine(WaitForAttackCD());
         return true;
@@ -155,7 +155,7 @@ public abstract class AttackBuilding : Building
         Debug.Log("升级到3级，选项为" + index);
     }
 
-    protected virtual void Attack()
+    protected virtual void AttackAttackTarget()
     {
         ShootBullet();           
     }
@@ -167,6 +167,31 @@ public abstract class AttackBuilding : Building
         bullet.Initialize(shootPoint.position, attackTarget, damage, arrowSpeed);        //arrow换成投射物父类
     }
 
+    private void SetClosestEnemyInDetectRangeAsAimEnemy()       //none参数可能用不到，在这里并不是
+    {
+
+        float minDistance = float.MaxValue;
+        int index = -1;
+        for (int i = 0; i < attackTargetList.Count; i++)
+        {
+
+
+            if (Vector3.Distance(transform.position, attackTargetList[i].transform.position) < minDistance)      //加入飞行单位后重构，近战单位不能攻击到飞行单位也不会索敌到飞行单位
+            {
+                minDistance = Vector3.Distance(transform.position, attackTargetList[i].transform.position);
+                index = i;
+            }
+        }
+        if (index != -1)
+        {
+            attackTarget = attackTargetList[index];
+
+            return;
+        }
+        Debug.LogWarning(gameObject.name + "未找到目标\n");
+        attackTarget = null;
+    }
+
     public void Initialize(float maxHealth, float damage,float attackRange, float attackCD, float arrowSpeed)   //后续增加建设点时再重构
     {
         this.maxHealth = maxHealth;
@@ -176,5 +201,7 @@ public abstract class AttackBuilding : Building
         this.arrowSpeed = arrowSpeed;
         attackCollider.radius = attackRange;
         health = maxHealth;
+
+        
     }
 }
