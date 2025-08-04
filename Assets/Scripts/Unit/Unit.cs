@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(UnitHealth))]
+//还要记得加一个FriendlyUnitHealth或者其子类
 [RequireComponent(typeof(FriendlyUnitUI))]
 [RequireComponent(typeof(FriendlyObject))]
 public class Unit : MonoBehaviour
@@ -22,7 +22,6 @@ public class Unit : MonoBehaviour
 
     [SerializeField] protected float attackCD;
 
-    [SerializeField] protected float attackRadius = 5;
 
     [SerializeField] private float turnSpeed = 10;
 

@@ -6,8 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(FriendlyObject))]
 public class FriendlyUnitHealth : MonoBehaviour
 {
-    [SerializeField] private float maxHealth;
-    [SerializeField] private float health;
+    [SerializeField] protected float maxHealth;
+    [SerializeField] protected float health;
    // [SerializeField] private FriendlyUnitType friendlyUnitType;         //应该可以删去，只用FriendlyObject中存储的友方单位类型
   //  private bool isDead = false;
 
@@ -18,7 +18,7 @@ public class FriendlyUnitHealth : MonoBehaviour
     {
         health = maxHealth;
     }
-    public void ReceiveDamage(float damage)
+    public virtual void ReceiveDamage(float damage)
     {
         Debug.Log("友方单位收到伤害" + damage);
         health -= Math.Min(damage,health);

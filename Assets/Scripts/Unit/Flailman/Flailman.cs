@@ -9,7 +9,7 @@ public class Flailman : Unit
         if (!attackReady)
             return;
         if (enemiesInAttackRange.Count > 0)
-            AttackAimEnemyOrFirstInRange();
+            AttackAllEnemiesInAttackRange();
     }
 
     private void AttackAllEnemiesInAttackRange()
@@ -19,7 +19,7 @@ public class Flailman : Unit
 
         for (int i = 0; i < enemiesInAttackRange.Count; i++)
         {
-            aimEnemy.ReceiveDamage(damage);
+            enemiesInAttackRange[i].ReceiveDamage(damage);
         }
     }
 }

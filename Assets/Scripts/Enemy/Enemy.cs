@@ -5,13 +5,19 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.UI.CanvasScaler;
 
+[Serializable]
+public class FriendlyUnitTypes
+{
+    public List<FriendlyUnitType> friendUnitTypeList;
+}
+
 public class Enemy : MonoBehaviour
 {
     [Header("数值")]
     [SerializeField] private bool canFly;
-    [SerializeField] private List<FriendlyUnitType> aimFriendlyUnitType;
+    [SerializeField] public List<FriendlyUnitTypes> aimFriendlyUnitTypesList;
 
-    [SerializeField] private float originalMaxHealth;
+[SerializeField] private float originalMaxHealth;
     [SerializeField] private float MaxHealth;
     private float health;
 
@@ -42,6 +48,7 @@ public class Enemy : MonoBehaviour
 
 
     [SerializeField]private List<FriendlyObject> FriendlyObjectInAttackRange;
+
 
     [Header("脚本组件")]
     private Rigidbody rb;
@@ -261,38 +268,75 @@ public class Enemy : MonoBehaviour
         return MaxHealth;
     }
 
+    //private void SetAimFriendlyUnit()
+    //{
+    //    foreach(FriendlyUnitType friendlyUnitType in aimFriendlyUnitType)
+    //    {
+    //        float minDistance = float.MaxValue;
+    //        int index = -1;
+    //        List<FriendlyObject> friendlyObjectList = FriendlyOBjectManager.Instance().GetFriendlyObjetcList();
+    //        for (int i = 0; i <friendlyObjectList.Count;i++)
+    //        {
+    //            if (friendlyObjectList[i].GetFriendlyUnitType() != friendlyUnitType)
+    //            {
+    //                continue;
+    //            }
+
+    //            //Debug.Log("敌人距离" + friendlyObjectList[i].name +"的距离为" + Vector3.Distance(transform.position, friendlyObjectList[i].transform.position));
+    //            if (Vector3.Distance(transform.position, friendlyObjectList[i].transform.position) < minDistance)
+    //            {
+    //                minDistance = Vector3.Distance(transform.position, friendlyObjectList[i].transform.position);
+    //                index = i;
+    //            }
+    //        }
+    //        if(index != -1)
+    //        {
+    //            aimFriendlyObject = friendlyObjectList[index];
+    //            Debug.Log(gameObject.name + "已找到目标\n"+ aimFriendlyObject);
+    //            return;
+    //        }
+    //    }
+
+    //    aimFriendlyObject = null;
+    //    Debug.LogWarning(gameObject.name + "未找到目标");
+        
+    //}
+
     private void SetAimFriendlyUnit()
     {
-        foreach(FriendlyUnitType friendlyUnitType in aimFriendlyUnitType)
+        aimFriendlyObject = null;
+        foreach (FriendlyUnitTypes friendlyUnitTypes in aimFriendlyUnitTypesList)
         {
             float minDistance = float.MaxValue;
-            int index = -1;
-            List<FriendlyObject> friendlyObjectList = FriendlyOBjectManager.Instance().GetFriendlyObjetcList();
-            for (int i = 0; i <friendlyObjectList.Count;i++)
+            foreach(FriendlyUnitType friendlyUnitType in friendlyUnitTypes.friendUnitTypeList)
             {
-                if (friendlyObjectList[i].GetFriendlyUnitType() != friendlyUnitType)
+                List<FriendlyObject> friendlyObjectList = FriendlyOBjectManager.Instance().GetFriendlyObjetcList();
+                for (int i = 0; i < friendlyObjectList.Count; i++)
                 {
-                    continue;
-                }
+                    if (friendlyObjectList[i].GetFriendlyUnitType() != friendlyUnitType)
+                    {
+                        continue;
+                    }
 
-                //Debug.Log("敌人距离" + friendlyObjectList[i].name +"的距离为" + Vector3.Distance(transform.position, friendlyObjectList[i].transform.position));
-                if (Vector3.Distance(transform.position, friendlyObjectList[i].transform.position) < minDistance)
-                {
-                    minDistance = Vector3.Distance(transform.position, friendlyObjectList[i].transform.position);
-                    index = i;
+                    //Debug.Log("敌人距离" + friendlyObjectList[i].name +"的距离为" + Vector3.Distance(transform.position, friendlyObjectList[i].transform.position));
+                    if (Vector3.Distance(transform.position, friendlyObjectList[i].transform.position) < minDistance)
+                    {
+                        minDistance = Vector3.Distance(transform.position, friendlyObjectList[i].transform.position);
+                        aimFriendlyObject = friendlyObjectList[i];
+                    }
                 }
             }
-            if(index != -1)
+            if (aimFriendlyObject != null)
             {
-                aimFriendlyObject = friendlyObjectList[index];
-                Debug.Log(gameObject.name + "已找到目标\n"+ aimFriendlyObject);
+                Debug.Log(gameObject.name + "已找到目标\n" + aimFriendlyObject);
                 return;
             }
+
         }
 
-        aimFriendlyObject = null;
-        Debug.LogWarning(gameObject.name + "未找到目标");
         
+        Debug.LogWarning(gameObject.name + "未找到目标");
+
     }
 
     public bool TrySlowSpeeddForSeconds(float seconds, float percent)

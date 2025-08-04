@@ -217,15 +217,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canFly: 0
-  aimFriendlyUnitType: 020000000100000000000000
+  aimFriendlyUnitTypesList:
+  - friendUnitTypeList: 00000000010000000200000003000000
   originalMaxHealth: 200
   MaxHealth: 200
-  health: 0
   originalSpeed: 40
   originalDamageToUnit: 5
   originalDamageToPlayer: 5
   originalDamageToBuilding: 5
-  originalDamageToHero: 0
+  originalDamageToHero: 5
   attackCD: 0.5
   turnSpeed: 5
   FriendlyObjectInAttackRange: []
@@ -311,7 +311,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2.09
+  m_Radius: 1
   m_Height: 12.41
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
