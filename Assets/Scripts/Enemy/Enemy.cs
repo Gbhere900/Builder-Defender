@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private float originalMaxHealth;
     [SerializeField] private float MaxHealth;
-    [SerializeField] private float health;
+    private float health;
 
     [SerializeField] private float originalSpeed;
     private float speed;
@@ -34,6 +34,8 @@ public class Enemy : MonoBehaviour
 
     private FriendlyObject aimFriendlyObject;
     private bool attackReady = true;
+
+    [SerializeField] private float turnSpeed = 10;
 
   //  private bool isSlow = false;
     private Coroutine slowCoroutine;
@@ -82,6 +84,7 @@ public class Enemy : MonoBehaviour
     private void FixedUpdate()
     {
         TryMove();
+        TryRotateToAimFriendlyObject();
     }
 
     //private void OnCollisionStay(Collision collision)
@@ -146,6 +149,35 @@ public class Enemy : MonoBehaviour
         }
             
         Move();
+    }
+
+    private void TryRotateToAimFriendlyObject()
+    {
+        if (aimFriendlyObject == null)
+            return;
+        RotateToAimFriendlyObject();
+    }
+    private void RotateToAimFriendlyObject()
+    {
+        if (aimFriendlyObject != null)
+        {
+            Vector3 targetDirection = aimFriendlyObject.transform.position - transform.position;
+            targetDirection.y = 0;
+
+            if (targetDirection.magnitude > 0.1f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+
+                // 渐进式转向：使用Slerp实现平滑过渡
+                Quaternion newRotation = Quaternion.Slerp(
+                    rb.rotation,
+                    targetRotation,
+                    turnSpeed * Time.fixedDeltaTime
+                );
+
+                rb.MoveRotation(newRotation);
+            }
+        }
     }
     private void Move()
     {
@@ -213,6 +245,7 @@ public class Enemy : MonoBehaviour
         damageToUnit = originalDamageToUnit;
         damageToPlayer = originalDamageToPlayer;
         damageToBuilding = originalDamageToBuilding;
+        damageToHero = originalDamageToHero;
 
         rb = GetComponent<Rigidbody>();
         FriendlyObjectInAttackRange.Clear();

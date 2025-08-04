@@ -217,7 +217,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canFly: 0
-  aimFriendlyUnitType: 02000000
+  aimFriendlyUnitType: 020000000100000000000000
   originalMaxHealth: 200
   MaxHealth: 200
   health: 0
@@ -227,8 +227,8 @@ MonoBehaviour:
   originalDamageToBuilding: 5
   originalDamageToHero: 0
   attackCD: 0.5
+  turnSpeed: 5
   FriendlyObjectInAttackRange: []
-  rigidbody: {fileID: 0}
 --- !u!114 &2545314786659740261
 MonoBehaviour:
   m_ObjectHideFlags: 0

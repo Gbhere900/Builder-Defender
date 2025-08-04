@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 2861931328494951439}
   - component: {fileID: 3535732796808224250}
-  - component: {fileID: 8515987493043649736}
   - component: {fileID: 6931942685035964628}
-  - component: {fileID: 8231076911379003232}
+  - component: {fileID: 4905747387211939379}
   - component: {fileID: 4429304101032089771}
   - component: {fileID: 4446221702591522351}
+  - component: {fileID: 1168912949768625061}
   m_Layer: 0
   m_Name: Spearman
   m_TagString: Untagged
@@ -54,20 +54,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   friendlyUnitType: 2
---- !u!114 &8515987493043649736
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 62908374993498001}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6345d10da01043469c6f9d7e4fc2fa0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  health: 0
 --- !u!114 &6931942685035964628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81,7 +67,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 7769798557256267295}
---- !u!114 &8231076911379003232
+--- !u!114 &4905747387211939379
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -90,17 +76,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 62908374993498001}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c9b59528a1440046859d87217dbdf57, type: 3}
+  m_Script: {fileID: 11500000, guid: 0528bf242330aa841b80d58bb0c7cd6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canFly: 0
   originalSpeed: 80
-  originalDamage: 2
-  damage: 2
+  originalDamage: 50
+  damage: 50
   attackCD: 1
   attackRadius: 1
+  turnSpeed: 10
   enemiesInDetectRange: []
   enemiesInAttackRange: []
+  reduceSpeedTime: 1
+  speedPercent: 80
 --- !u!54 &4429304101032089771
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -151,6 +140,20 @@ CapsuleCollider:
   m_Height: 1.97
   m_Direction: 1
   m_Center: {x: 0, y: 0.77, z: 0}
+--- !u!114 &1168912949768625061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 62908374993498001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46b07d0c866ba9e4c8d12e4ae41d7cc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 1000
+  health: 1000
 --- !u!1 &1872602634824848273
 GameObject:
   m_ObjectHideFlags: 0

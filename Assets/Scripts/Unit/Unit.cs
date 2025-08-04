@@ -24,11 +24,15 @@ public class Unit : MonoBehaviour
 
     [SerializeField] protected float attackRadius = 5;
 
+    [SerializeField] private float turnSpeed = 10;
+
     [SerializeField] public List<Enemy> enemiesInDetectRange;
     [SerializeField] public List<Enemy> enemiesInAttackRange;
 
     protected Enemy aimEnemy;
     protected bool attackReady = true;
+
+
 
 
     [Header("脚本组件")]
@@ -76,10 +80,37 @@ public class Unit : MonoBehaviour
     private void FixedUpdate()
     {
         TryMove();
-        
+        TryRotateToAimFriendlyObject();
     }
 
+    private void TryRotateToAimFriendlyObject()
+    {
+        if (aimEnemy == null)
+            return;
+        RotateToAimFriendlyObject();
+    }
+    private void RotateToAimFriendlyObject()
+    {
+        if (aimEnemy != null)
+        {
+            Vector3 targetDirection = aimEnemy.transform.position - transform.position;
+            targetDirection.y = 0;
 
+            if (targetDirection.magnitude > 0.1f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+
+                // 渐进式转向：使用Slerp实现平滑过渡
+                Quaternion newRotation = Quaternion.Slerp(
+                    rb.rotation,
+                    targetRotation,
+                    turnSpeed * Time.fixedDeltaTime
+                );
+
+                rb.MoveRotation(newRotation);
+            }
+        }
+    }
 
     private void SetClosestEnemyInDetectRangeAsAimEnemy()       //none参数可能用不到，在这里并不是
     {
@@ -115,8 +146,7 @@ public class Unit : MonoBehaviour
             return false;
         }
 
-        transform.forward = aimEnemy.transform.position - transform.position;
-
+       
         if(enemiesInAttackRange.Contains(aimEnemy))
             return false;
 
