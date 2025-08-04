@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class FriendlyOBject : MonoBehaviour
+public class FriendlyObject : MonoBehaviour
 {
     [SerializeField] private FriendlyUnitType friendlyUnitType;
-    public Action<FriendlyOBject> OnDestroyed;
+    public Action<FriendlyObject> OnDestroyed;
     private void OnEnable()
     {
         Debug.Log("将激活的FriendlyObject放入列表");

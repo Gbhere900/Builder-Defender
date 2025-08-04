@@ -7,7 +7,7 @@ public class FriendlyOBjectManager : MonoBehaviour
 {
     static FriendlyOBjectManager instance;
 
-    private List<FriendlyOBject> FriendlyObjectList = new List<FriendlyOBject>();
+    private List<FriendlyObject> FriendlyObjectList = new List<FriendlyObject>();
 
     
     private void Awake()
@@ -21,18 +21,18 @@ public class FriendlyOBjectManager : MonoBehaviour
         return instance; 
     }
 
-    public void AddFriendlyObject(FriendlyOBject friendlyOBject)
+    public void AddFriendlyObject(FriendlyObject friendlyOBject)
     {
         FriendlyObjectList.Add(friendlyOBject);
     }
 
-    public void RemoveFriendlyObject(FriendlyOBject friendlyOBject)
+    public void RemoveFriendlyObject(FriendlyObject friendlyOBject)
     {
         FriendlyObjectList.Remove(friendlyOBject);
     }
 
 
-    public List<FriendlyOBject> GetFriendlyObjetcList()
+    public List<FriendlyObject> GetFriendlyObjetcList()
     {
         return FriendlyObjectList;
     }

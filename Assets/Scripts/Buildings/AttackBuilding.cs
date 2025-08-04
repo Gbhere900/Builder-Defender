@@ -188,7 +188,7 @@ public abstract class AttackBuilding : Building
 
             return;
         }
-        Debug.LogWarning(gameObject.name + "未找到目标\n");
+      //  Debug.LogWarning(gameObject.name + "未找到目标\n");
         attackTarget = null;
     }
 

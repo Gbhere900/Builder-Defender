@@ -2,34 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(UnitHealth))]
+[RequireComponent(typeof(FriendlyUnitUI))]
+[RequireComponent(typeof(FriendlyObject))]
 public class Unit : MonoBehaviour
 {
     [Header("数值")]
-    [SerializeField] private bool canFly;
+    [SerializeField] protected bool canFly;
     //[SerializeField] private List<FriendlyUnitType> aimFriendlyUnitType;
 
     //属性部分待后面重构
 
 
-    [SerializeField] private float originalSpeed;
+    [SerializeField] protected float originalSpeed;
     private float speed;
 
-    [SerializeField] private float originalDamage;
-    [SerializeField] private float damage;
+    [SerializeField] protected float originalDamage;
+    [SerializeField] protected float damage;
 
-    [SerializeField] private float attackCD;
+    [SerializeField] protected float attackCD;
 
-    [SerializeField] private float attackRadius = 5;
+    [SerializeField] protected float attackRadius = 5;
 
     [SerializeField] public List<Enemy> enemiesInDetectRange;
     [SerializeField] public List<Enemy> enemiesInAttackRange;
 
-    private Enemy aimEnemy;
-    private bool attackReady = true;
+    protected Enemy aimEnemy;
+    protected bool attackReady = true;
 
 
     [Header("脚本组件")]
-    private Rigidbody rigidbody;
+    protected Rigidbody rb;
 
 
     private void Awake()
@@ -44,7 +47,7 @@ public class Unit : MonoBehaviour
         //SetAimEnemy();
     }
 
-    IEnumerator WaitForAttackCD()
+    protected IEnumerator WaitForAttackCD()
     {
         yield return new WaitForSeconds(attackCD);
         attackReady = true;
@@ -55,9 +58,9 @@ public class Unit : MonoBehaviour
         //增加buff系统后重构
         speed = originalSpeed;
         damage = originalDamage;
-        rigidbody = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
 
-        rigidbody = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
         enemiesInDetectRange.Clear();
         enemiesInAttackRange.Clear();
 
@@ -106,7 +109,7 @@ public class Unit : MonoBehaviour
 
     private bool TryMove()              //可能有bug，因为移动到攻击范围后只有很小的窗口时间给攻击
     {
-        rigidbody.velocity = Vector3.zero;
+        rb.velocity = Vector3.zero;
         if (aimEnemy == null)
         {
             return false;
@@ -117,7 +120,7 @@ public class Unit : MonoBehaviour
         if(enemiesInAttackRange.Contains(aimEnemy))
             return false;
 
-        rigidbody.velocity = (aimEnemy.transform.position - transform.position).normalized * speed * Time.deltaTime;
+        rb.velocity = (aimEnemy.transform.position - transform.position).normalized * speed * Time.deltaTime;
         return true;       
 
     }

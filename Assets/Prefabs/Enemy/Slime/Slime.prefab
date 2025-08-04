@@ -217,16 +217,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canFly: 0
-  aimFriendlyUnitType: 020000000100000000000000
+  aimFriendlyUnitType: 02000000
   originalMaxHealth: 200
   MaxHealth: 200
   health: 0
-  originalSpeed: 100
+  originalSpeed: 40
   originalDamageToUnit: 5
   originalDamageToPlayer: 5
   originalDamageToBuilding: 5
   originalDamageToHero: 0
   attackCD: 0.5
+  FriendlyObjectInAttackRange: []
   rigidbody: {fileID: 0}
 --- !u!114 &2545314786659740261
 MonoBehaviour:
@@ -310,8 +311,8 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.8
-  m_Height: 7.65
+  m_Radius: 2.09
+  m_Height: 12.41
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3728505990479139901

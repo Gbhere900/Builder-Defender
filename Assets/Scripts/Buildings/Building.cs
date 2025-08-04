@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(FriendlyOBject))]
+[RequireComponent(typeof(FriendlyObject))]
 public abstract class Building : MonoBehaviour
 {
     [Header("数值")]
@@ -20,13 +20,13 @@ public abstract class Building : MonoBehaviour
 
     [Header("建筑通用脚本组件")]
 
-    [SerializeField] protected Rigidbody rigidbody;
+    protected Rigidbody rb;
 
     public Action OnHealthChanged;
 
     protected virtual void Awake()              //后面的Awake和Onenabe记得base
     {
-        rigidbody = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
     }
 
     protected virtual void OnEnable()           //后面的Awake和Onenabe记得base

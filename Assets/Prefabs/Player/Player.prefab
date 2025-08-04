@@ -78,8 +78,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 200
-  rigidbody: {fileID: 3574436626531876403}
-  collider: {fileID: 8910729154949289509}
+  rb: {fileID: 3574436626531876403}
+  _collider: {fileID: 0}
 --- !u!54 &3574436626531876403
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -186,9 +186,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36b6b7605021a6949998f4b5afccad7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  health: 100
-  friendlyUnitType: 0
+  maxHealth: 1000
+  health: 1000
 --- !u!114 &5141733519940010659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,9 +228,9 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2989558136782883113}
-  m_LocalRotation: {x: 0.041676514, y: -0.70587754, z: -0.70587754, w: -0.041676514}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.51, y: 1.51, z: 1.51}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 3.45}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5105239863859614928}
@@ -239,8 +238,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: -186.758}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 477.04, y: 263.87}
+  m_SizeDelta: {x: 938.5, y: 528}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &7458982129808336546
 Canvas:
@@ -263,7 +262,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &368836041969276946
 MonoBehaviour:
@@ -319,7 +318,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeVirtualCamera: {fileID: 0}
   cameraOffset: 1
-  heightOffset: 5
 --- !u!1 &7436955512329410587
 GameObject:
   m_ObjectHideFlags: 0

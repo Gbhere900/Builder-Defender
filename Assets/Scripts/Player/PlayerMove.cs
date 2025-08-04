@@ -8,12 +8,12 @@ public class PlayerMove : MonoBehaviour
     private Vector3 direction;
 
     [Header("½Å±¾×é¼þ")]
-    [SerializeField]private Rigidbody rigidbody;
-    [SerializeField]private Collider collider;
+    [SerializeField]private Rigidbody rb;
+    [SerializeField]private Collider _collider;
 
     private void Awake()
     {
-        
+       
     }
 
     private void Update()
@@ -56,8 +56,10 @@ public class PlayerMove : MonoBehaviour
 
     private void Move()
     {
-        rigidbody.velocity = direction.normalized * speed * Time.deltaTime;
+        rb.velocity = direction.normalized * speed * Time.deltaTime;
         //Debug.Log(rigidbody.velocity);
         direction = Vector3.zero;
     }
+
+
 }

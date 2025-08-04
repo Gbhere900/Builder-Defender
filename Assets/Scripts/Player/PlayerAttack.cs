@@ -96,7 +96,7 @@ public class PlayerAttack : MonoBehaviour
             enemy.OnDead -=  OnEnemyDead;
             if(attackTarget = enemy)
             {
-                Debug.Log("当前攻击目标离开攻击范围");
+               // Debug.Log("当前攻击目标离开攻击范围");
                 SetClosestAttackTargetAsAttackTarget(enemy);
                 
             }
@@ -131,7 +131,7 @@ public class PlayerAttack : MonoBehaviour
     {
         if(attackTargetList.Count == 0)
         {
-            Debug.Log("攻击范围内已无敌人，设置最近攻击目标为空");
+         //   Debug.Log("攻击范围内已无敌人，设置最近攻击目标为空");
             attackTarget.OnDead -= SetClosestAttackTargetAsAttackTarget;
             attackTarget = null;
             attackIndex = -1;

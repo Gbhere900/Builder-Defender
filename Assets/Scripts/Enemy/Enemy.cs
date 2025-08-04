@@ -32,14 +32,17 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private float attackCD;
 
-    private FriendlyOBject aimFriendlyUnit;
+    private FriendlyObject aimFriendlyObject;
     private bool attackReady = true;
 
+  //  private bool isSlow = false;
+    private Coroutine slowCoroutine;
 
-    [SerializeField]private List<FriendlyOBject> FriendlyObjectInAttackRange;
+
+    [SerializeField]private List<FriendlyObject> FriendlyObjectInAttackRange;
 
     [Header("脚本组件")]
-    [SerializeField] private Rigidbody rigidbody;
+    private Rigidbody rb;
 
     //事件
     public Action OnHealthChanged;
@@ -48,7 +51,7 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
-        FriendlyObjectInAttackRange = new List<FriendlyOBject>();
+        FriendlyObjectInAttackRange = new List<FriendlyObject>();
     }
 
     private void OnEnable()
@@ -96,23 +99,24 @@ public class Enemy : MonoBehaviour
         if (other.isTrigger)
             return;
 
-        if (other.gameObject.TryGetComponent<FriendlyOBject>(out FriendlyOBject friendlyObject))
+        if (other.gameObject.TryGetComponent<FriendlyObject>(out FriendlyObject friendlyObject))
         {
+            Debug.LogWarning(other.gameObject.name + "进入范围");
             FriendlyObjectInAttackRange.Add(friendlyObject);
             friendlyObject.OnDestroyed += OnFriendlyUnitDead;
         }
     }
 
-    private void OnFriendlyUnitDead(FriendlyOBject friendlyOBject)
+    private void OnFriendlyUnitDead(FriendlyObject friendlyOBject)
     {
         if (FriendlyObjectInAttackRange.Contains(friendlyOBject))
         {
-            Debug.Log("PlayerAttack目标的Enemy死亡，将其从攻击目标列表移除");
+            Debug.Log("Enemy目标的FriendlyObject死亡，将其从攻击目标列表移除");
             FriendlyObjectInAttackRange.Remove(friendlyOBject);
         }
         else
         {
-            Debug.LogWarning("敌人不在PlayerAttack列表中时死亡事件触发，说明敌人在离开玩家攻击范围后未取消订阅事件，现在执行取消订阅");
+            Debug.LogWarning("友方单位不在Enemy列表中时死亡事件触发，说明敌人在离开玩家攻击范围后未取消订阅事件，现在执行取消订阅");
             friendlyOBject.OnDestroyed -= OnFriendlyUnitDead;
         }
 
@@ -123,7 +127,7 @@ public class Enemy : MonoBehaviour
         if (other.isTrigger)
             return;
 
-        if (other.gameObject.TryGetComponent<FriendlyOBject>(out FriendlyOBject friendlyObject))
+        if (other.gameObject.TryGetComponent<FriendlyObject>(out FriendlyObject friendlyObject))
         {
             FriendlyObjectInAttackRange.Remove(friendlyObject);
             friendlyObject.OnDestroyed -= OnFriendlyUnitDead;
@@ -132,26 +136,30 @@ public class Enemy : MonoBehaviour
 
     private void TryMove()
     {
-        rigidbody.velocity = Vector3.zero;
-        if (aimFriendlyUnit == null)
+        rb.velocity = Vector3.zero;
+        if (aimFriendlyObject == null)
             return;
-        if (FriendlyObjectInAttackRange.Contains(aimFriendlyUnit))
+        if (FriendlyObjectInAttackRange.Contains(aimFriendlyObject))
+        {
+            Debug.Log(gameObject.name + "的攻击目标在攻击范围中，停止移动");
             return;
+        }
+            
         Move();
     }
     private void Move()
     {
-        Vector3 direction = (aimFriendlyUnit.transform.position - transform.position).normalized;
-        rigidbody.velocity = direction * Time.deltaTime * speed;
+        Vector3 direction = (aimFriendlyObject.transform.position - transform.position).normalized;
+        rb.velocity = direction * Time.deltaTime * speed;
     }
     
     private void AttackAimFriendlyUnitOrFirstInRange()
     {
         attackReady = false;
-        FriendlyOBject tempFriendlyObject;
-        if (FriendlyObjectInAttackRange.Contains(aimFriendlyUnit))
+        FriendlyObject tempFriendlyObject;
+        if (FriendlyObjectInAttackRange.Contains(aimFriendlyObject))
         {
-            tempFriendlyObject = aimFriendlyUnit;
+            tempFriendlyObject = aimFriendlyObject;
         }
         else
         {
@@ -206,7 +214,7 @@ public class Enemy : MonoBehaviour
         damageToPlayer = originalDamageToPlayer;
         damageToBuilding = originalDamageToBuilding;
 
-        rigidbody = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
         FriendlyObjectInAttackRange.Clear();
     }
 
@@ -226,7 +234,7 @@ public class Enemy : MonoBehaviour
         {
             float minDistance = float.MaxValue;
             int index = -1;
-            List<FriendlyOBject> friendlyObjectList = FriendlyOBjectManager.Instance().GetFriendlyObjetcList();
+            List<FriendlyObject> friendlyObjectList = FriendlyOBjectManager.Instance().GetFriendlyObjetcList();
             for (int i = 0; i <friendlyObjectList.Count;i++)
             {
                 if (friendlyObjectList[i].GetFriendlyUnitType() != friendlyUnitType)
@@ -243,16 +251,43 @@ public class Enemy : MonoBehaviour
             }
             if(index != -1)
             {
-                aimFriendlyUnit = friendlyObjectList[index];
-                Debug.Log(gameObject.name + "已找到目标\n"+ aimFriendlyUnit.gameObject.name);
+                aimFriendlyObject = friendlyObjectList[index];
+                Debug.Log(gameObject.name + "已找到目标\n"+ aimFriendlyObject);
                 return;
             }
         }
 
-        aimFriendlyUnit = null;
+        aimFriendlyObject = null;
         Debug.LogWarning(gameObject.name + "未找到目标");
         
     }
 
+    public bool TrySlowSpeeddForSeconds(float seconds, float percent)
+    {
+        if(percent < speed / originalSpeed * 100)
+        {
+            ChangeSpeedForSeconds(seconds,percent);
+            return true;
+        }
 
+        return false;
+
+    }
+    public void ChangeSpeedForSeconds(float seconds, float percent)
+    {
+        Debug.Log("已改变速度");
+        speed =originalSpeed * percent/100;                 //后续看情况再重构得更有拓展性，目前只支持在originalSpeed基础上进行加减速，无法处理多种加减速效果共同影响的情况
+        if (slowCoroutine != null)
+        {
+            StopCoroutine(slowCoroutine);
+        }
+            slowCoroutine = StartCoroutine(WaitForSpeedRecover(seconds));
+    }
+
+IEnumerator WaitForSpeedRecover(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        speed = originalSpeed;                      //完成build系统后重构
+        Debug.Log("速度恢复");
+    }
 }
