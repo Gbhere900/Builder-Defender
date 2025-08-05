@@ -31,7 +31,7 @@ public abstract class Building : MonoBehaviour
 
     protected virtual void OnEnable()           //后面的Awake和Onenabe记得base
     {
-
+        Initialize();   
     }
 
     public void ReceiveDamage(float damage)
@@ -58,5 +58,10 @@ public abstract class Building : MonoBehaviour
     public float GetHealth()
     {
         return health;
+    }
+
+    private void Initialize()       //待完成
+    {
+
     }
 }

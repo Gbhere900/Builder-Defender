@@ -13,7 +13,7 @@ public abstract class AttackBuilding : Building
     [SerializeField] protected float attackCD;
     [SerializeField] protected bool attackReady = true;
     //[SerializeField] protected float originalDamage;        加入Buff系统后重构
-    [SerializeField] protected float damage;
+    [SerializeField] protected Damage_Friendly damage_Friendly;
 
     [SerializeField] protected Transform shootPoint;
 
@@ -46,7 +46,7 @@ public abstract class AttackBuilding : Building
     protected override void OnEnable()              //后面的Awake和Onenabe记得base
     {
         base.OnEnable();
-        attackCollider.radius = attackRange;                //初始化时也需要使  attackCollider.radius = attackRange;   
+        Initialize();             //初始化时也需要使  attackCollider.radius = attackRange;   
     }
 
 
@@ -125,14 +125,15 @@ public abstract class AttackBuilding : Building
     {
         int index= choice - 1;
         maxHealth += LevelUPEnhance_L2[index].maxHealthEnhance;
-        damage *= (1 + LevelUPEnhance_L2[index].damageEnhance/100);
+        damage_Friendly.originalDamage *= (1 + LevelUPEnhance_L3[index].damageEnhance / 100);
+        damage_Friendly.damage = damage_Friendly.originalDamage;
         attackRange *= (1 + LevelUPEnhance_L2[index].attackRangeEnhance/100);
         attackCD = attackCD / (1 + LevelUPEnhance_L2[index].attackSpeedEnhance/100);
         arrowSpeed *= (1 + LevelUPEnhance_L2[index].arrowSpeedEnhance/100);
 
         AttackBuilding LevelUPBuilding =  GameObject.Instantiate
             (LevelUPEnhance_L2[index].LevelUpBuilding, transform.position, Quaternion.identity);
-        LevelUPBuilding.Initialize(maxHealth,damage,attackRange,attackCD,arrowSpeed);                   
+        LevelUPBuilding.ApplyLevelUP(maxHealth, damage_Friendly, attackRange,attackCD,arrowSpeed);                   
         Destroy(this.gameObject);                   //
 
         Debug.Log("升级到2级，选项为" + index);
@@ -142,14 +143,15 @@ public abstract class AttackBuilding : Building
     {
         int index = choice - 1;
         maxHealth += LevelUPEnhance_L3[index].maxHealthEnhance;
-        damage *= (1 + LevelUPEnhance_L3[index].damageEnhance/100);
-        attackCollider.radius *= (1 + LevelUPEnhance_L3[index].attackRangeEnhance/100);
+        damage_Friendly.originalDamage *= (1 + LevelUPEnhance_L3[index].damageEnhance/100);
+        damage_Friendly.damage = damage_Friendly.originalDamage;                                //后续重构
+        attackRange *= (1 + LevelUPEnhance_L2[index].attackRangeEnhance / 100);
         attackCD = attackCD / (1 + LevelUPEnhance_L3[index].attackSpeedEnhance/100);
         arrowSpeed *= (1 + LevelUPEnhance_L3[index].arrowSpeedEnhance/100);
 
         AttackBuilding LevelUPBuilding = GameObject.Instantiate
     (LevelUPEnhance_L3[index].LevelUpBuilding, transform.position, Quaternion.identity);
-        LevelUPBuilding.Initialize(maxHealth, damage, attackRange, attackCD, arrowSpeed);
+        LevelUPBuilding.ApplyLevelUP(maxHealth, damage_Friendly, attackRange, attackCD, arrowSpeed);
 
         Destroy(this.gameObject);
         Debug.Log("升级到3级，选项为" + index);
@@ -164,7 +166,7 @@ public abstract class AttackBuilding : Building
     {
         Debug.LogWarning(bulletPrefabs.name);
         Bullet bullet = ObjectPoolManager.Instance().GetObject(bulletPrefabs.gameObject).GetComponent<Bullet>();
-        bullet.Initialize(shootPoint.position, attackTarget, damage, arrowSpeed);        //arrow换成投射物父类
+        bullet.Initialize(shootPoint.position, attackTarget, damage_Friendly, arrowSpeed);        //arrow换成投射物父类
     }
 
     private void SetClosestEnemyInDetectRangeAsAimEnemy()       //none参数可能用不到，在这里并不是
@@ -192,10 +194,10 @@ public abstract class AttackBuilding : Building
         attackTarget = null;
     }
 
-    public void Initialize(float maxHealth, float damage,float attackRange, float attackCD, float arrowSpeed)   //后续增加建设点时再重构
+    public void ApplyLevelUP(float maxHealth, Damage_Friendly damage_Friendly, float attackRange, float attackCD, float arrowSpeed)   //后续增加建设点时再重构
     {
         this.maxHealth = maxHealth;
-        this.damage = damage;
+        this.damage_Friendly = damage_Friendly;
         this.attackRange = attackRange;
         this.attackCD = attackCD;
         this.arrowSpeed = arrowSpeed;
@@ -203,5 +205,12 @@ public abstract class AttackBuilding : Building
         health = maxHealth;
 
         
+    }
+
+    public void Initialize()        //待完成,因为防御塔还没有original属性
+    {
+        attackCollider.radius = attackRange;
+        damage_Friendly.damage = damage_Friendly.originalDamage;
+        damage_Friendly.damageSource = this.gameObject;
     }
 }

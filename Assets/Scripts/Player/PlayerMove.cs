@@ -9,7 +9,6 @@ public class PlayerMove : MonoBehaviour
 
     [Header("½Å±¾×é¼þ")]
     [SerializeField]private Rigidbody rb;
-    [SerializeField]private Collider _collider;
 
     private void Awake()
     {

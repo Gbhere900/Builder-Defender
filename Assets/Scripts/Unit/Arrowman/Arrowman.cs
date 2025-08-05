@@ -21,11 +21,11 @@ public class Arrowman : Unit
         {
             if (enemiesInAttackRange[i] == aimEnemy)
             {
-                arrow.Initialize(shootPoint.position, aimEnemy.gameObject, damage, arrowSpeed, timeToLive, height);
+                arrow.Initialize(shootPoint.position, aimEnemy.gameObject, damage_Friendly, arrowSpeed, timeToLive, height);
                 return;
             }
         }
 
-        arrow.Initialize(shootPoint.position, enemiesInAttackRange[0].gameObject, damage, arrowSpeed, timeToLive, height);
+        arrow.Initialize(shootPoint.position, enemiesInAttackRange[0].gameObject, damage_Friendly, arrowSpeed, timeToLive, height);
     }
 }

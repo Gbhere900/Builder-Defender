@@ -17,13 +17,12 @@ public class Unit : MonoBehaviour
     [SerializeField] protected float originalSpeed;
     private float speed;
 
-    [SerializeField] protected float originalDamage;
-    [SerializeField] protected float damage;
+    [SerializeField] protected Damage_Friendly damage_Friendly;
 
     [SerializeField] protected float attackCD;
 
 
-    [SerializeField] private float turnSpeed = 10;
+    [SerializeField] protected float turnSpeed = 10;
 
     [SerializeField] public List<Enemy> enemiesInDetectRange;
     [SerializeField] public List<Enemy> enemiesInAttackRange;
@@ -60,7 +59,8 @@ public class Unit : MonoBehaviour
     {
         //增加buff系统后重构
         speed = originalSpeed;
-        damage = originalDamage;
+        damage_Friendly.damage = damage_Friendly.originalDamage;
+        damage_Friendly.damageSource = this.gameObject;
         rb = GetComponent<Rigidbody>();
 
         rb = GetComponent<Rigidbody>();
@@ -172,12 +172,12 @@ public class Unit : MonoBehaviour
         {
             if (enemiesInAttackRange[i] == aimEnemy)
             {
-                aimEnemy.ReceiveDamage(damage);
+                aimEnemy.ReceiveDamage(damage_Friendly);
                 return ;
             }
         }
 
-        enemiesInAttackRange[0].ReceiveDamage(damage);
+        enemiesInAttackRange[0].ReceiveDamage(damage_Friendly);
     }
 }
 

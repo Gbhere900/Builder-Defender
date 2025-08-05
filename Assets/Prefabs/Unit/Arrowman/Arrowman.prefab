@@ -56,10 +56,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canFly: 0
   originalSpeed: 80
-  originalDamage: 10
-  damage: 10
+  damage_Friendly:
+    damageType_Friendly: 1
+    originalDamage: 30
+    damage: 0
+    damageSource: {fileID: 0}
   attackCD: 1
-  attackRadius: 5
   turnSpeed: 10
   enemiesInDetectRange: []
   enemiesInAttackRange: []

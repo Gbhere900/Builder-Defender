@@ -16,13 +16,13 @@ public class Spearman : Unit
         {
             if (enemiesInAttackRange[i] == aimEnemy)
             {
-                aimEnemy.ReceiveDamage(damage);
+                aimEnemy.ReceiveDamage(damage_Friendly);
                 aimEnemy.ChangeSpeedForSeconds(reduceSpeedTime,speedPercent);
                 return;
             }
         }
 
-        enemiesInAttackRange[0].ReceiveDamage(damage);
+        enemiesInAttackRange[0].ReceiveDamage(damage_Friendly);
         aimEnemy.ChangeSpeedForSeconds(reduceSpeedTime, speedPercent);
     }
 

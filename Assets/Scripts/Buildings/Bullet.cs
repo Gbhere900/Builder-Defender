@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    protected float damage;
+    protected Damage_Friendly damage_Friendly;
     protected float speed;
     [SerializeField] protected float height;
     [SerializeField] protected float timeToLive;
@@ -42,7 +42,7 @@ public class Bullet : MonoBehaviour
             return;
         if(other.gameObject == attackTarget)
         {
-            attackTarget.GetComponent<Enemy>().ReceiveDamage(damage);
+            attackTarget.GetComponent<Enemy>().ReceiveDamage(damage_Friendly);
             ObjectPoolManager.Instance().ReleaseObject(gameObject);
         }
         //if (other.TryGetComponent<Enemy>(out Enemy enemy))
@@ -103,12 +103,12 @@ public class Bullet : MonoBehaviour
         CalculateForwardVector();
     }
 
-    public void Initialize(Vector3 position,GameObject attackTarget, float damage, float speed, float timeToLive = 3,float height = 3)
+    public void Initialize(Vector3 position,GameObject attackTarget, Damage_Friendly damage_Friendly, float speed, float timeToLive = 3,float height = 3)
     {
         transform.position = position;
 
         this.attackTarget = attackTarget;
-        this.damage = damage;
+        this.damage_Friendly = damage_Friendly;
         this.speed = speed;
         this.timeToLive = timeToLive;
         this.height = height;

@@ -13,45 +13,45 @@ public class FriendlyUnitTypes
 
 public class Enemy : MonoBehaviour
 {
-    [Header("数值")]
-    [SerializeField] private bool canFly;
+    [Header("数值")] 
+    [SerializeField] protected bool canFly;
     [SerializeField] public List<FriendlyUnitTypes> aimFriendlyUnitTypesList;
 
-[SerializeField] private float originalMaxHealth;
-    [SerializeField] private float MaxHealth;
-    private float health;
+[SerializeField] protected float originalMaxHealth;
+    [SerializeField] protected float MaxHealth;
+    protected float health;
 
-    [SerializeField] private float originalSpeed;
-    private float speed;
+    [SerializeField] protected float originalSpeed;
+    protected float speed;
 
-    [SerializeField] private float originalDamageToUnit;
-    private float damageToUnit;
+    [SerializeField] protected float originalDamageToUnit;
+    protected float damageToUnit;
 
-    [SerializeField] private float originalDamageToPlayer;
-    private float damageToPlayer;
+    [SerializeField] protected float originalDamageToPlayer;
+    protected float damageToPlayer;
 
-    [SerializeField] private float originalDamageToBuilding;
-    private float damageToBuilding;
+    [SerializeField] protected float originalDamageToBuilding;
+    protected float damageToBuilding;
 
-    [SerializeField] private float originalDamageToHero;
-    private float damageToHero;
+    [SerializeField] protected float originalDamageToHero;
+    protected float damageToHero;
 
-    [SerializeField] private float attackCD;
+    [SerializeField] protected float attackCD;
 
-    private FriendlyObject aimFriendlyObject;
-    private bool attackReady = true;
+    protected FriendlyObject aimFriendlyObject;
+    protected bool attackReady = true;
 
-    [SerializeField] private float turnSpeed = 10;
+    [SerializeField] protected float turnSpeed = 10;
 
-  //  private bool isSlow = false;
-    private Coroutine slowCoroutine;
+    //  protected bool isSlow = false;
+    protected Coroutine slowCoroutine;
 
 
-    [SerializeField]private List<FriendlyObject> FriendlyObjectInAttackRange;
+    [SerializeField] protected List<FriendlyObject> FriendlyObjectInAttackRange;
 
 
     [Header("脚本组件")]
-    private Rigidbody rb;
+    protected Rigidbody rb;
 
     //事件
     public Action OnHealthChanged;
@@ -225,8 +225,9 @@ public class Enemy : MonoBehaviour
     }
 
 
-    public void ReceiveDamage(float damage)
+    public virtual void ReceiveDamage(Damage_Friendly damage_Friendly)  //子类根据类型重写这个函数,例如根据是否为近战伤害重新计算damage，根据damageSource的组件判断是否有额外伤害
     {
+        float damage = damage_Friendly.damage;             
         health -= Mathf.Min(health, damage);
         OnHealthChanged.Invoke();
         if (health <= 0)

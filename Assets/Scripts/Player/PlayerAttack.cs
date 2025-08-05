@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 
+
+//玩家待完成BUFF部分，完成后记得加上Initialize（）函数
 public class PlayerAttack : MonoBehaviour
 {
     private Enemy attackTarget;
@@ -12,7 +14,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private Transform shootPoint;
     [SerializeField] private Arrow arrowPrefab;
 
-    [SerializeField] private float damage;
+    [SerializeField] private Damage_Friendly damage_Friendly;
     [SerializeField] private float arrowSpeed;
     [SerializeField] private float arrowTimeToLive;
     [SerializeField] private float attackCD;
@@ -21,12 +23,13 @@ public class PlayerAttack : MonoBehaviour
     private void OnEnable()
     {
         attackTargetList = new List<Enemy>();
+        Initialize();
     }
     private void Attack()
     {
         Arrow arrow = ObjectPoolManager.Instance().GetObject(arrowPrefab.gameObject).GetComponent<Arrow>();
         // Arrow arrow = GameObject.Instantiate(arrowPrefabs,shootPoint);//对象池实现后重构
-        arrow.Initialize(shootPoint.position, attackTarget.gameObject, damage, arrowSpeed,arrowTimeToLive);
+        arrow.Initialize(shootPoint.position, attackTarget.gameObject, damage_Friendly, arrowSpeed,arrowTimeToLive);
 
         canAttack = false;
         StartCoroutine(WaitForAttackCD());
@@ -172,5 +175,10 @@ public class PlayerAttack : MonoBehaviour
         attackTarget.OnDead +=  SetClosestAttackTargetAsAttackTarget;   //可能要重构多封装一层
     }
 
+    private void Initialize()
+    {
+        damage_Friendly.damage = damage_Friendly.originalDamage;
+        damage_Friendly.damageSource = this.gameObject;
+    }
     
 }

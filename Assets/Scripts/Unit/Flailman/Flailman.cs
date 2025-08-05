@@ -19,7 +19,7 @@ public class Flailman : Unit
 
         for (int i = 0; i < enemiesInAttackRange.Count; i++)
         {
-            enemiesInAttackRange[i].ReceiveDamage(damage);
+            enemiesInAttackRange[i].ReceiveDamage(damage_Friendly);
         }
     }
 }

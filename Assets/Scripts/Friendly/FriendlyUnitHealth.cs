@@ -39,10 +39,10 @@ public class FriendlyUnitHealth : MonoBehaviour
     }
 
 
-    public void ReceiveHealing(float damage)
+    public void ReceiveHealing(Damage_Friendly damage_Friendly)
     {
-        Debug.Log("友方单位收到治疗" + damage);
-        health = Math.Min(maxHealth, health + damage);
+        Debug.Log("友方单位收到治疗" + damage_Friendly.damage);
+        health = Math.Min(maxHealth, health + damage_Friendly.damage);
         OnHealthChanged.Invoke();
         
     }

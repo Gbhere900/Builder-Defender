@@ -12,7 +12,7 @@ public class HealBullet : Bullet
 
         if (other.gameObject == attackTarget)
         {
-            attackTarget.GetComponent<FriendlyUnitHealth>().ReceiveHealing(damage);
+            attackTarget.GetComponent<FriendlyUnitHealth>().ReceiveHealing(damage_Friendly);
             ObjectPoolManager.Instance().ReleaseObject(gameObject);
         }
 

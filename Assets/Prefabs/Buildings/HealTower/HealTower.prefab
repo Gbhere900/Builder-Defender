@@ -96,14 +96,17 @@ MonoBehaviour:
   maxLevel: 3
   LevelUPEnhance_L2: []
   LevelUPEnhance_L3: []
-  rigidbody: {fileID: 0}
   bulletPrefabs: {fileID: -1182900753836620242, guid: d567c7f48f842c94c8996635c1ba0127,
     type: 3}
   arrowSpeed: 10
   attackRange: 10
   attackCD: 1
   attackReady: 1
-  damage: 30
+  damage_Friendly:
+    damageType_Friendly: 1
+    originalDamage: 10
+    damage: 0
+    damageSource: {fileID: 0}
   shootPoint: {fileID: 4721770377774139344}
   attackCollider: {fileID: 5600622833701527050}
 --- !u!65 &4713213252958728372
