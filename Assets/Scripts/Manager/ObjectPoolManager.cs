@@ -40,11 +40,11 @@ public class ObjectPoolManager : MonoBehaviour
         {
             ObjectPoolDictionary[name].Release(prefab);
 
-            Debug.Log("回收" + prefab.name);
+           // Debug.Log("回收" + prefab.name);
             return;
         }
-        Debug.Log(prefab.name);
-        Debug.LogWarning("未找到要回收的对象的对象池,直接将对象销毁");
+      //  Debug.Log(prefab.name);
+        Debug.LogWarning("未找到"+prefab.gameObject.name+"的对象池,直接将对象销毁");
         GameObject.Destroy(prefab);
     }
 

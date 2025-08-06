@@ -2,9 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
-
 public abstract class AttackBuilding : Building
 {
     [SerializeField] protected Bullet bulletPrefabs;
@@ -32,7 +29,7 @@ public abstract class AttackBuilding : Building
 
     private void Update()
     {
-        SetClosestEnemyInDetectRangeAsAimEnemy();
+        SetClosestGameObjectInDetectRangeAsAimEnemy();
         TryAttack();
     }
 
@@ -69,7 +66,7 @@ public abstract class AttackBuilding : Building
     {
         if (attackTargetList.Contains(enemy.gameObject))
         {
-            Debug.Log("PlayerAttack目标的Enemy死亡，将其从攻击目标列表移除");
+            //Debug.Log("PlayerAttack目标的Enemy死亡，将其从攻击目标列表移除");
             attackTargetList.Remove(enemy.gameObject);
         }
         else
@@ -164,12 +161,11 @@ public abstract class AttackBuilding : Building
 
     private void ShootBullet()
     {
-        Debug.LogWarning(bulletPrefabs.name);
         Bullet bullet = ObjectPoolManager.Instance().GetObject(bulletPrefabs.gameObject).GetComponent<Bullet>();
         bullet.Initialize(shootPoint.position, attackTarget, damage, arrowSpeed);        //arrow换成投射物父类
     }
 
-    private void SetClosestEnemyInDetectRangeAsAimEnemy()       //none参数可能用不到，在这里并不是
+    protected virtual void SetClosestGameObjectInDetectRangeAsAimEnemy()       //none参数可能用不到，在这里并不是
     {
 
         float minDistance = float.MaxValue;

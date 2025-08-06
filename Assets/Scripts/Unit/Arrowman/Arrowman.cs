@@ -11,7 +11,7 @@ public class Arrowman : Unit
     [SerializeField] private float height;
     protected override void AttackAimEnemyOrFirstInRange()
     {
-        Debug.Log(gameObject.name + "¹¥»÷" + enemiesInAttackRange[0].name);
+
         attackReady = false;
         StartCoroutine(WaitForAttackCD());
 

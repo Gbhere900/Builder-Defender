@@ -8,7 +8,7 @@ public class Spearman : Unit
     [SerializeField] private float speedPercent = 50;
     protected override void AttackAimEnemyOrFirstInRange()
     {
-        Debug.Log(gameObject.name + "¹¥»÷" + enemiesInAttackRange[0].name);
+       // Debug.Log(gameObject.name + "¹¥»÷" + enemiesInAttackRange[0].name);
         attackReady = false;
         StartCoroutine(WaitForAttackCD());
 

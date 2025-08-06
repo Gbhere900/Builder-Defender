@@ -10,7 +10,7 @@ public class FriendlyObject : MonoBehaviour
     public Action<FriendlyObject> OnDestroyed;
     private void OnEnable()
     {
-        Debug.Log("将激活的FriendlyObject放入列表");
+      //  Debug.Log("将激活的FriendlyObject放入列表");
         FriendlyOBjectManager.Instance().AddFriendlyObject(this);
     }
 

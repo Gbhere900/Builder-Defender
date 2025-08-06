@@ -27,7 +27,7 @@ public class AttackTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("attack触发");
+        //Debug.Log("attack触发");
         if (other.isTrigger)
             return;
         if (other.TryGetComponent<Enemy>(out Enemy enemy))
@@ -41,7 +41,7 @@ public class AttackTrigger : MonoBehaviour
     {
         if (unit.enemiesInAttackRange.Contains(enemy))
         {
-            Debug.Log("PlayerAttack目标的Enemy死亡，将其从攻击目标列表移除");
+           // Debug.Log("PlayerAttack目标的Enemy死亡，将其从攻击目标列表移除");
             unit.enemiesInAttackRange.Remove(enemy);
         }
         else

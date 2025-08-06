@@ -61,7 +61,7 @@ public class PlayerAttack : MonoBehaviour
             return;
         if (other.TryGetComponent<Enemy>(out Enemy enemy))
         {
-            Debug.Log(enemy.gameObject.name + "进入玩家攻击范围");
+           // Debug.Log(enemy.gameObject.name + "进入玩家攻击范围");
             attackTargetList.Add(enemy);
             enemy.OnDead += OnEnemyDead;
 
@@ -77,7 +77,7 @@ public class PlayerAttack : MonoBehaviour
     {
         if(attackTargetList.Contains(enemy))
         {
-            Debug.Log("PlayerAttack目标的Enemy死亡，将其从攻击目标列表移除");
+          //  Debug.Log("PlayerAttack目标的Enemy死亡，将其从攻击目标列表移除");
             attackTargetList.Remove(enemy);
         }
         else

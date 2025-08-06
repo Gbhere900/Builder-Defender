@@ -132,7 +132,7 @@ public class Unit : MonoBehaviour
             
             return;
         }
-        Debug.LogWarning(gameObject.name + "未找到目标\n" );
+       // Debug.LogWarning(gameObject.name + "未找到目标\n" );
         aimEnemy = null;
     }  
 
@@ -164,7 +164,6 @@ public class Unit : MonoBehaviour
 
     protected virtual void AttackAimEnemyOrFirstInRange()
     {
-        Debug.Log(gameObject.name + "攻击" + enemiesInAttackRange[0].name);
         attackReady = false;
         StartCoroutine(WaitForAttackCD());
 

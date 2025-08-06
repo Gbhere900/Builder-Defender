@@ -47,21 +47,46 @@ public class HealTower : AttackBuilding
     {
         if (!attackReady)
             return false;
-        if (attackTargetList.Count == 0)
+        if (attackTarget == null)
         {
             return false;
 
         }
-        if (attackTargetList[0] == null)
-        {
-            attackTargetList.RemoveAt(0);
-            return false;
-        }
+        //if (attackTargetList[0] == null)
+        //{
+        //    attackTargetList.RemoveAt(0);
+        //    return false;
+        //}
 
-        attackTarget = attackTargetList[0];
+        
         AttackAttackTarget();
         attackReady = false;
         StartCoroutine(WaitForAttackCD());
         return true;
+    }
+
+    protected override void SetClosestGameObjectInDetectRangeAsAimEnemy()
+    {
+        float minDistance = float.MaxValue;
+        int index = -1;
+        for (int i = 0; i < attackTargetList.Count; i++)
+        {
+            if ((attackTargetList[i].GetComponent<FriendlyUnitHealth>().IsFullHealth()))
+                continue;
+
+            if (Vector3.Distance(transform.position, attackTargetList[i].transform.position) < minDistance)      //加入飞行单位后重构，近战单位不能攻击到飞行单位也不会索敌到飞行单位
+            {
+                minDistance = Vector3.Distance(transform.position, attackTargetList[i].transform.position);
+                index = i;
+            }
+        }
+        if (index != -1)
+        {
+            attackTarget = attackTargetList[index];
+
+            return;
+        }
+        //  Debug.LogWarning(gameObject.name + "未找到目标\n");
+        attackTarget = null;
     }
 }

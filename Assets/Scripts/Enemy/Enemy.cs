@@ -101,7 +101,6 @@ public class Enemy : MonoBehaviour
 
         if (other.gameObject.TryGetComponent<FriendlyObject>(out FriendlyObject friendlyObject))
         {
-            Debug.LogWarning(other.gameObject.name + "进入范围");
             FriendlyObjectInAttackRange.Add(friendlyObject);
             friendlyObject.OnDestroyed += OnFriendlyUnitDead;
         }
@@ -111,7 +110,7 @@ public class Enemy : MonoBehaviour
     {
         if (FriendlyObjectInAttackRange.Contains(friendlyOBject))
         {
-            Debug.Log("Enemy目标的FriendlyObject死亡，将其从攻击目标列表移除");
+           // Debug.Log("Enemy目标的FriendlyObject死亡，将其从攻击目标列表移除");
             FriendlyObjectInAttackRange.Remove(friendlyOBject);
         }
         else
@@ -141,7 +140,6 @@ public class Enemy : MonoBehaviour
             return;
         if (FriendlyObjectInAttackRange.Contains(aimFriendlyObject))
         {
-            Debug.Log(gameObject.name + "的攻击目标在攻击范围中，停止移动");
             return;
         }
             
@@ -311,7 +309,7 @@ public class Enemy : MonoBehaviour
             }
             if (aimFriendlyObject != null)
             {
-                Debug.Log(gameObject.name + "已找到目标\n" + aimFriendlyObject);
+               // Debug.Log(gameObject.name + "已找到目标\n" + aimFriendlyObject);
                 return;
             }
 
@@ -335,7 +333,7 @@ public class Enemy : MonoBehaviour
     }
     public void ChangeSpeedForSeconds(float seconds, float percent)
     {
-        Debug.Log("已改变速度");
+       // Debug.Log("已改变速度");
         speed =originalSpeed * percent/100;                 //后续看情况再重构得更有拓展性，目前只支持在originalSpeed基础上进行加减速，无法处理多种加减速效果共同影响的情况
         if (slowCoroutine != null)
         {

@@ -20,7 +20,6 @@ public class FriendlyUnitHealth : MonoBehaviour
     }
     public virtual void ReceiveDamage(Damage damage)            //加入易伤后重构
     {
-        Debug.Log("友方单位收到伤害" + damage.damage);
         health -= Math.Min(damage.damage,health);
         OnHealthChanged.Invoke();
         if(health <= 0)
@@ -34,8 +33,7 @@ public class FriendlyUnitHealth : MonoBehaviour
     {
        // isDead = true;
         OnDead?.Invoke(this);
-        Debug.Log(gameObject.name + "死亡");
-        gameObject.SetActive(false);
+        gameObject.SetActive(false);            //用对象池重构
     }
 
 
