@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 //´ıÊµÏÖ
-public enum DamageType_Friendly 
+public enum DamageType 
 {
     Melee,
     Ranged

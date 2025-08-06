@@ -18,10 +18,6 @@ public class Test : MonoBehaviour
             WaveManager.Instance().BeginWave(1);
         }
 
-        if(Input.GetKeyUp(KeyCode.U))
-        {
-            playerHealth.ReceiveDamage(30);
-        }
 
         if(Input.GetKeyUp(KeyCode.Alpha1))
         {

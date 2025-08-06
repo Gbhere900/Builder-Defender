@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    protected Damage_Friendly damage_Friendly;
+    protected Damage damage_Friendly;
     protected float speed;
     [SerializeField] protected float height;
     [SerializeField] protected float timeToLive;
@@ -103,7 +103,7 @@ public class Bullet : MonoBehaviour
         CalculateForwardVector();
     }
 
-    public void Initialize(Vector3 position,GameObject attackTarget, Damage_Friendly damage_Friendly, float speed, float timeToLive = 3,float height = 3)
+    public void Initialize(Vector3 position,GameObject attackTarget, Damage damage_Friendly, float speed, float timeToLive = 3,float height = 3)
     {
         transform.position = position;
 

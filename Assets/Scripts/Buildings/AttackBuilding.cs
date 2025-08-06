@@ -13,7 +13,7 @@ public abstract class AttackBuilding : Building
     [SerializeField] protected float attackCD;
     [SerializeField] protected bool attackReady = true;
     //[SerializeField] protected float originalDamage;        加入Buff系统后重构
-    [SerializeField] protected Damage_Friendly damage_Friendly;
+    [SerializeField] protected Damage damage_Friendly;
 
     [SerializeField] protected Transform shootPoint;
 
@@ -194,7 +194,7 @@ public abstract class AttackBuilding : Building
         attackTarget = null;
     }
 
-    public void ApplyLevelUP(float maxHealth, Damage_Friendly damage_Friendly, float attackRange, float attackCD, float arrowSpeed)   //后续增加建设点时再重构
+    public void ApplyLevelUP(float maxHealth, Damage damage_Friendly, float attackRange, float attackCD, float arrowSpeed)   //后续增加建设点时再重构
     {
         this.maxHealth = maxHealth;
         this.damage_Friendly = damage_Friendly;

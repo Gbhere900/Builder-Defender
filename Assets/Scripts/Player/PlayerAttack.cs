@@ -14,7 +14,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private Transform shootPoint;
     [SerializeField] private Arrow arrowPrefab;
 
-    [SerializeField] private Damage_Friendly damage_Friendly;
+    [SerializeField] private Damage damage_Friendly;
     [SerializeField] private float arrowSpeed;
     [SerializeField] private float arrowTimeToLive;
     [SerializeField] private float attackCD;

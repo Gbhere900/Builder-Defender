@@ -17,7 +17,7 @@ public class Unit : MonoBehaviour
     [SerializeField] protected float originalSpeed;
     private float speed;
 
-    [SerializeField] protected Damage_Friendly damage_Friendly;
+    [SerializeField] protected Damage damage_Friendly;
 
     [SerializeField] protected float attackCD;
 

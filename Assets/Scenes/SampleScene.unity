@@ -1166,6 +1166,16 @@ PrefabInstance:
       propertyPath: activeVirtualCamera
       value: 
       objectReference: {fileID: 2072153737}
+    - target: {fileID: 9210412488329451084, guid: 52f8f043259dd234883f9dca9e722d2b,
+        type: 3}
+      propertyPath: damageAdjustment
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 9210412488329451084, guid: 52f8f043259dd234883f9dca9e722d2b,
+        type: 3}
+      propertyPath: rangedDamageAdjustment
+      value: 50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1917,7 +1927,7 @@ PrefabInstance:
     - target: {fileID: 3888204382542449507, guid: f185178098b81d34db3cd98c91b154c2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.04
+      value: 9.06
       objectReference: {fileID: 0}
     - target: {fileID: 3888204382542449507, guid: f185178098b81d34db3cd98c91b154c2,
         type: 3}
@@ -2058,7 +2068,7 @@ PrefabInstance:
     - target: {fileID: 8434724044891089038, guid: 96164746964d0194588e208a998ced32,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.14
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 8434724044891089038, guid: 96164746964d0194588e208a998ced32,
         type: 3}
@@ -2177,6 +2187,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8527789521878654570, guid: 73f71f6785ca7af4fada9ab812043cc0,
+        type: 3}
+      propertyPath: damage_Friendly.originalDamage
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 8527789521878654570, guid: 73f71f6785ca7af4fada9ab812043cc0,
+        type: 3}
+      propertyPath: damage_Friendly.damageType_Friendly
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8858543869409028593, guid: 73f71f6785ca7af4fada9ab812043cc0,
         type: 3}
@@ -2455,7 +2475,7 @@ PrefabInstance:
     - target: {fileID: 2861931328494951439, guid: cd0d09abba760b341a003fcdf8545321,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.68
+      value: 6.05
       objectReference: {fileID: 0}
     - target: {fileID: 2861931328494951439, guid: cd0d09abba760b341a003fcdf8545321,
         type: 3}

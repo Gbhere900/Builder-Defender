@@ -24,17 +24,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float originalSpeed;
     protected float speed;
 
-    [SerializeField] protected float originalDamageToUnit;
-    protected float damageToUnit;
-
-    [SerializeField] protected float originalDamageToPlayer;
-    protected float damageToPlayer;
-
-    [SerializeField] protected float originalDamageToBuilding;
-    protected float damageToBuilding;
-
-    [SerializeField] protected float originalDamageToHero;
-    protected float damageToHero;
+    [SerializeField] protected Damage damage;
 
     [SerializeField] protected float attackCD;
 
@@ -207,17 +197,11 @@ public class Enemy : MonoBehaviour
         switch (tempFriendlyObject.GetFriendlyUnitType())
         {
 
-            case (FriendlyUnitType.Unit):
-                tempFriendlyObject.GetComponent<FriendlyUnitHealth>().ReceiveDamage(damageToUnit);
-                break;
-            case (FriendlyUnitType.Player):
-                tempFriendlyObject.GetComponent<FriendlyUnitHealth>().ReceiveDamage(damageToPlayer);
-                break;
-            case (FriendlyUnitType.Hero):
-                tempFriendlyObject.GetComponent<FriendlyUnitHealth>().ReceiveDamage(damageToHero);
-                break;
             case (FriendlyUnitType.Building):
-                tempFriendlyObject.GetComponent<Building>().ReceiveDamage(damageToBuilding);
+                tempFriendlyObject.GetComponent<Building>().ReceiveDamage(damage);
+                break;
+            default:
+                tempFriendlyObject.GetComponent<FriendlyUnitHealth>().ReceiveDamage(damage);
                 break;
         }
 
@@ -225,7 +209,7 @@ public class Enemy : MonoBehaviour
     }
 
 
-    public virtual void ReceiveDamage(Damage_Friendly damage_Friendly)  //子类根据类型重写这个函数,例如根据是否为近战伤害重新计算damage，根据damageSource的组件判断是否有额外伤害
+    public virtual void ReceiveDamage(Damage damage_Friendly)  //子类根据类型重写这个函数,例如根据是否为近战伤害重新计算damage，根据damageSource的组件判断是否有额外伤害
     {
         float damage = damage_Friendly.damage;             
         health -= Mathf.Min(health, damage);
@@ -250,10 +234,7 @@ public class Enemy : MonoBehaviour
         MaxHealth = originalMaxHealth;
         health = MaxHealth;
         speed = originalSpeed;
-        damageToUnit = originalDamageToUnit;
-        damageToPlayer = originalDamageToPlayer;
-        damageToBuilding = originalDamageToBuilding;
-        damageToHero = originalDamageToHero;
+        damage.damage = damage.originalDamage;
 
         rb = GetComponent<Rigidbody>();
         FriendlyObjectInAttackRange.Clear();

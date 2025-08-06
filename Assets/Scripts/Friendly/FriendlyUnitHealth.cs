@@ -18,10 +18,10 @@ public class FriendlyUnitHealth : MonoBehaviour
     {
         health = maxHealth;
     }
-    public virtual void ReceiveDamage(float damage)
+    public virtual void ReceiveDamage(Damage damage)            //加入易伤后重构
     {
-        Debug.Log("友方单位收到伤害" + damage);
-        health -= Math.Min(damage,health);
+        Debug.Log("友方单位收到伤害" + damage.damage);
+        health -= Math.Min(damage.damage,health);
         OnHealthChanged.Invoke();
         if(health <= 0)
         {
@@ -39,7 +39,7 @@ public class FriendlyUnitHealth : MonoBehaviour
     }
 
 
-    public void ReceiveHealing(Damage_Friendly damage_Friendly)
+    public void ReceiveHealing(Damage damage_Friendly)
     {
         Debug.Log("友方单位收到治疗" + damage_Friendly.damage);
         health = Math.Min(maxHealth, health + damage_Friendly.damage);

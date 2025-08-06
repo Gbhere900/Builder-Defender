@@ -34,9 +34,9 @@ public abstract class Building : MonoBehaviour
         Initialize();   
     }
 
-    public void ReceiveDamage(float damage)
+    public void ReceiveDamage(Damage damage)        //增加对建筑易伤加入判断重构
     {
-        health -= Math.Min(health, damage);
+        health -= Math.Min(health, damage.damage);
         OnHealthChanged.Invoke();
         if(health <= 0)
         {
