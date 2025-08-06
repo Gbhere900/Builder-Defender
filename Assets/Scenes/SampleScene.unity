@@ -691,7 +691,7 @@ PrefabInstance:
     - target: {fileID: 8762473808607199870, guid: 076bd1f5f8e348547b8934bd45d0aafd,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.58
+      value: -0.29
       objectReference: {fileID: 0}
     - target: {fileID: 8762473808607199870, guid: 076bd1f5f8e348547b8934bd45d0aafd,
         type: 3}
@@ -701,7 +701,7 @@ PrefabInstance:
     - target: {fileID: 8762473808607199870, guid: 076bd1f5f8e348547b8934bd45d0aafd,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8.84
+      value: -0.46
       objectReference: {fileID: 0}
     - target: {fileID: 8762473808607199870, guid: 076bd1f5f8e348547b8934bd45d0aafd,
         type: 3}
@@ -968,7 +968,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: HealTower (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6282453560294477035, guid: 94a80692aac4a234e8400c9a69720a77, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1366,7 +1367,7 @@ PrefabInstance:
     - target: {fileID: 8762473808607199870, guid: 076bd1f5f8e348547b8934bd45d0aafd,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.26
+      value: 8.09
       objectReference: {fileID: 0}
     - target: {fileID: 8762473808607199870, guid: 076bd1f5f8e348547b8934bd45d0aafd,
         type: 3}
@@ -1376,7 +1377,7 @@ PrefabInstance:
     - target: {fileID: 8762473808607199870, guid: 076bd1f5f8e348547b8934bd45d0aafd,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.81
+      value: -5.25
       objectReference: {fileID: 0}
     - target: {fileID: 8762473808607199870, guid: 076bd1f5f8e348547b8934bd45d0aafd,
         type: 3}
@@ -1919,15 +1920,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1684767364108986473, guid: f185178098b81d34db3cd98c91b154c2,
-        type: 3}
-      propertyPath: activeVirtualCamera
-      value: 
-      objectReference: {fileID: 2072153737}
     - target: {fileID: 3888204382542449507, guid: f185178098b81d34db3cd98c91b154c2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.06
+      value: 8.54
       objectReference: {fileID: 0}
     - target: {fileID: 3888204382542449507, guid: f185178098b81d34db3cd98c91b154c2,
         type: 3}
@@ -1937,7 +1933,7 @@ PrefabInstance:
     - target: {fileID: 3888204382542449507, guid: f185178098b81d34db3cd98c91b154c2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.78
+      value: 11.38
       objectReference: {fileID: 0}
     - target: {fileID: 3888204382542449507, guid: f185178098b81d34db3cd98c91b154c2,
         type: 3}
@@ -2060,15 +2056,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3270797320190516392, guid: 96164746964d0194588e208a998ced32,
-        type: 3}
-      propertyPath: activeVirtualCamera
-      value: 
-      objectReference: {fileID: 2072153737}
     - target: {fileID: 8434724044891089038, guid: 96164746964d0194588e208a998ced32,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11
+      value: 4.44
       objectReference: {fileID: 0}
     - target: {fileID: 8434724044891089038, guid: 96164746964d0194588e208a998ced32,
         type: 3}
@@ -2188,21 +2179,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8527789521878654570, guid: 73f71f6785ca7af4fada9ab812043cc0,
-        type: 3}
-      propertyPath: damage_Friendly.originalDamage
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 8527789521878654570, guid: 73f71f6785ca7af4fada9ab812043cc0,
-        type: 3}
-      propertyPath: damage_Friendly.damageType_Friendly
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8858543869409028593, guid: 73f71f6785ca7af4fada9ab812043cc0,
-        type: 3}
-      propertyPath: activeVirtualCamera
-      value: 
-      objectReference: {fileID: 2072153737}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2329,7 +2305,7 @@ PrefabInstance:
     - target: {fileID: 443308103974765707, guid: 94a80692aac4a234e8400c9a69720a77,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.36
+      value: -10.44
       objectReference: {fileID: 0}
     - target: {fileID: 443308103974765707, guid: 94a80692aac4a234e8400c9a69720a77,
         type: 3}
@@ -2339,7 +2315,7 @@ PrefabInstance:
     - target: {fileID: 443308103974765707, guid: 94a80692aac4a234e8400c9a69720a77,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.19
+      value: -0.07
       objectReference: {fileID: 0}
     - target: {fileID: 443308103974765707, guid: 94a80692aac4a234e8400c9a69720a77,
         type: 3}
@@ -2394,11 +2370,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1134204587764790860, guid: 63bb3725e5dc94b4ca54edaa1bfaf6cb,
-        type: 3}
-      propertyPath: activeVirtualCamera
-      value: 
-      objectReference: {fileID: 2072153737}
     - target: {fileID: 4086549367683708502, guid: 63bb3725e5dc94b4ca54edaa1bfaf6cb,
         type: 3}
       propertyPath: m_Name
@@ -2417,7 +2388,7 @@ PrefabInstance:
     - target: {fileID: 5360838226875724487, guid: 63bb3725e5dc94b4ca54edaa1bfaf6cb,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.93
+      value: 10.92
       objectReference: {fileID: 0}
     - target: {fileID: 5360838226875724487, guid: 63bb3725e5dc94b4ca54edaa1bfaf6cb,
         type: 3}
@@ -2475,7 +2446,7 @@ PrefabInstance:
     - target: {fileID: 2861931328494951439, guid: cd0d09abba760b341a003fcdf8545321,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.05
+      value: -1.78
       objectReference: {fileID: 0}
     - target: {fileID: 2861931328494951439, guid: cd0d09abba760b341a003fcdf8545321,
         type: 3}
@@ -2485,7 +2456,7 @@ PrefabInstance:
     - target: {fileID: 2861931328494951439, guid: cd0d09abba760b341a003fcdf8545321,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8.25
+      value: 3.66
       objectReference: {fileID: 0}
     - target: {fileID: 2861931328494951439, guid: cd0d09abba760b341a003fcdf8545321,
         type: 3}
@@ -2522,11 +2493,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7970695499129887084, guid: cd0d09abba760b341a003fcdf8545321,
-        type: 3}
-      propertyPath: activeVirtualCamera
-      value: 
-      objectReference: {fileID: 2072153737}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

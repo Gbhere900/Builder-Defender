@@ -235,6 +235,7 @@ public class Enemy : MonoBehaviour
         health = MaxHealth;
         speed = originalSpeed;
         damage.damage = damage.originalDamage;
+        damage.damageSource = this.gameObject;
 
         rb = GetComponent<Rigidbody>();
         FriendlyObjectInAttackRange.Clear();

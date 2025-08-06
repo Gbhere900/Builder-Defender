@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class BuildingUI : MonoBehaviour
 {
     [SerializeField] private Image healthBar;
-    [SerializeField] private Building building;
+    private Building building;
 
     private void OnEnable()
     {

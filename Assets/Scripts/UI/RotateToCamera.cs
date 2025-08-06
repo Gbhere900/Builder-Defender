@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class RotateToCamera : MonoBehaviour
 {
-    [SerializeField] private CinemachineVirtualCameraBase activeVirtualCamera;
+    private CinemachineVirtualCameraBase activeVirtualCamera;
     [SerializeField] private float cameraOffset = 1;
 
     private void OnEnable()

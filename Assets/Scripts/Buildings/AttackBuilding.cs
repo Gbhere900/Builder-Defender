@@ -13,7 +13,7 @@ public abstract class AttackBuilding : Building
     [SerializeField] protected float attackCD;
     [SerializeField] protected bool attackReady = true;
     //[SerializeField] protected float originalDamage;        加入Buff系统后重构
-    [SerializeField] protected Damage damage_Friendly;
+    [SerializeField] protected Damage damage;
 
     [SerializeField] protected Transform shootPoint;
 
@@ -125,15 +125,15 @@ public abstract class AttackBuilding : Building
     {
         int index= choice - 1;
         maxHealth += LevelUPEnhance_L2[index].maxHealthEnhance;
-        damage_Friendly.originalDamage *= (1 + LevelUPEnhance_L3[index].damageEnhance / 100);
-        damage_Friendly.damage = damage_Friendly.originalDamage;
+        damage.originalDamage *= (1 + LevelUPEnhance_L3[index].damageEnhance / 100);
+        damage.damage = damage.originalDamage;
         attackRange *= (1 + LevelUPEnhance_L2[index].attackRangeEnhance/100);
         attackCD = attackCD / (1 + LevelUPEnhance_L2[index].attackSpeedEnhance/100);
         arrowSpeed *= (1 + LevelUPEnhance_L2[index].arrowSpeedEnhance/100);
 
         AttackBuilding LevelUPBuilding =  GameObject.Instantiate
             (LevelUPEnhance_L2[index].LevelUpBuilding, transform.position, Quaternion.identity);
-        LevelUPBuilding.ApplyLevelUP(maxHealth, damage_Friendly, attackRange,attackCD,arrowSpeed);                   
+        LevelUPBuilding.ApplyLevelUP(maxHealth, damage, attackRange,attackCD,arrowSpeed);                   
         Destroy(this.gameObject);                   //
 
         Debug.Log("升级到2级，选项为" + index);
@@ -143,15 +143,15 @@ public abstract class AttackBuilding : Building
     {
         int index = choice - 1;
         maxHealth += LevelUPEnhance_L3[index].maxHealthEnhance;
-        damage_Friendly.originalDamage *= (1 + LevelUPEnhance_L3[index].damageEnhance/100);
-        damage_Friendly.damage = damage_Friendly.originalDamage;                                //后续重构
+        damage.originalDamage *= (1 + LevelUPEnhance_L3[index].damageEnhance/100);
+        damage.damage = damage.originalDamage;                                //后续重构
         attackRange *= (1 + LevelUPEnhance_L2[index].attackRangeEnhance / 100);
         attackCD = attackCD / (1 + LevelUPEnhance_L3[index].attackSpeedEnhance/100);
         arrowSpeed *= (1 + LevelUPEnhance_L3[index].arrowSpeedEnhance/100);
 
         AttackBuilding LevelUPBuilding = GameObject.Instantiate
     (LevelUPEnhance_L3[index].LevelUpBuilding, transform.position, Quaternion.identity);
-        LevelUPBuilding.ApplyLevelUP(maxHealth, damage_Friendly, attackRange, attackCD, arrowSpeed);
+        LevelUPBuilding.ApplyLevelUP(maxHealth, damage, attackRange, attackCD, arrowSpeed);
 
         Destroy(this.gameObject);
         Debug.Log("升级到3级，选项为" + index);
@@ -166,7 +166,7 @@ public abstract class AttackBuilding : Building
     {
         Debug.LogWarning(bulletPrefabs.name);
         Bullet bullet = ObjectPoolManager.Instance().GetObject(bulletPrefabs.gameObject).GetComponent<Bullet>();
-        bullet.Initialize(shootPoint.position, attackTarget, damage_Friendly, arrowSpeed);        //arrow换成投射物父类
+        bullet.Initialize(shootPoint.position, attackTarget, damage, arrowSpeed);        //arrow换成投射物父类
     }
 
     private void SetClosestEnemyInDetectRangeAsAimEnemy()       //none参数可能用不到，在这里并不是
@@ -197,7 +197,7 @@ public abstract class AttackBuilding : Building
     public void ApplyLevelUP(float maxHealth, Damage damage_Friendly, float attackRange, float attackCD, float arrowSpeed)   //后续增加建设点时再重构
     {
         this.maxHealth = maxHealth;
-        this.damage_Friendly = damage_Friendly;
+        this.damage = damage_Friendly;
         this.attackRange = attackRange;
         this.attackCD = attackCD;
         this.arrowSpeed = arrowSpeed;
@@ -210,7 +210,7 @@ public abstract class AttackBuilding : Building
     public void Initialize()        //待完成,因为防御塔还没有original属性
     {
         attackCollider.radius = attackRange;
-        damage_Friendly.damage = damage_Friendly.originalDamage;
-        damage_Friendly.damageSource = this.gameObject;
+        damage.damage = damage.originalDamage;
+        damage.damageSource = this.gameObject;
     }
 }
