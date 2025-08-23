@@ -18,15 +18,5 @@ public class Test : MonoBehaviour
             WaveManager.Instance().BeginWave(1);
         }
 
-
-        if(Input.GetKeyUp(KeyCode.Alpha1))
-        {
-            attackBuilding.LevelUP_L2(1);
-        }
-
-        if (Input.GetKeyUp(KeyCode.Alpha2))
-        {
-            attackBuilding.LevelUP_L2(2);
-        }
     }
 }

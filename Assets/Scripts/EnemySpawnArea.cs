@@ -41,9 +41,9 @@ public class EnemySpawnArea : MonoBehaviour
         //BeginWave(1);  //等待重构
     }
 
-    public void TryBeginWave(int waveIndex)       //每次开始当前波次都要调用
+    public void TryBeginWave(int waveNum)       //每次开始当前波次都要调用
     {
-        if (waveIndex > Waves.Count)
+        if (waveNum > Waves.Count)
         {
             Debug.LogWarning("指定开始的波次不存在或波次索引有误");
             return;
@@ -54,13 +54,13 @@ public class EnemySpawnArea : MonoBehaviour
         //    return;
           
         //}
-        BeginWave(waveIndex);
+        BeginWave(waveNum);
     }
 
-    public void BeginWave(int waveIndex)       //每次开始当前波次都要调用
+    public void BeginWave(int waveNum)       //每次开始当前波次都要调用
     {
 
-        currentWave = Waves[waveIndex - 1];
+        currentWave = Waves[waveNum - 1];
         for(int i=0;i<hasBegun.Length;i++)
         {
             hasBegun[i] = false;

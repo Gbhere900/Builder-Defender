@@ -1,10 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class AttackBuilding : Building
 {
+    
     [SerializeField] protected Bullet bulletPrefabs;
+    [SerializeField] protected AttackBuildingAttribute basicAttribute;
+
     [SerializeField] protected float arrowSpeed;
     [SerializeField] protected float attackRange;
     [SerializeField] protected float attackCD;
@@ -21,6 +25,15 @@ public abstract class AttackBuilding : Building
     protected GameObject attackTarget;
 
     
+    [SerializeField] protected List<UpgradeOptions> upgradeOptions;
+
+    [Serializable]
+    public class UpgradeOptions
+    {
+        public List<UpgradeOption> upgradeOptions;
+    }
+
+
     protected IEnumerator WaitForAttackCD()
     {
         yield return new WaitForSeconds(attackCD);
@@ -118,42 +131,41 @@ public abstract class AttackBuilding : Building
 
 
 
-    public void LevelUP_L2(int choice)
+    public override void ApplyAllBuildingUpgrades(BuildingData buildingData)
     {
-        int index= choice - 1;
-        maxHealth += LevelUPEnhance_L2[index].maxHealthEnhance;
-        damage.originalDamage *= (1 + LevelUPEnhance_L3[index].damageEnhance / 100);
-        damage.damage = damage.originalDamage;
-        attackRange *= (1 + LevelUPEnhance_L2[index].attackRangeEnhance/100);
-        attackCD = attackCD / (1 + LevelUPEnhance_L2[index].attackSpeedEnhance/100);
-        arrowSpeed *= (1 + LevelUPEnhance_L2[index].arrowSpeedEnhance/100);
+        //先按照ScriptableObject复原一级时的属性
 
-        AttackBuilding LevelUPBuilding =  GameObject.Instantiate
-            (LevelUPEnhance_L2[index].LevelUpBuilding, transform.position, Quaternion.identity);
-        LevelUPBuilding.ApplyLevelUP(maxHealth, damage, attackRange,attackCD,arrowSpeed);                   
-        Destroy(this.gameObject);                   //
+        returnToBasicAttributes();
+        
+     
+        //再根据建筑升级数据还原当前登记下完整属性
+        for(int i= 0;i<buildingData.currentLevel - 1;i++)
+        {
+            int choice = buildingData.upgradeChoices[i].choice;
+            ApplyBuildingUpgradeOption(upgradeOptions[i].upgradeOptions[choice - 1]);
+        }
 
-        Debug.Log("升级到2级，选项为" + index);
+        
     }
 
-    public void LevelUP_L3(int choice)
+    public void ApplyBuidingUpgradeChoice(UpgradeChoice upgradeChoice)
     {
-        int index = choice - 1;
-        maxHealth += LevelUPEnhance_L3[index].maxHealthEnhance;
-        damage.originalDamage *= (1 + LevelUPEnhance_L3[index].damageEnhance/100);
-        damage.damage = damage.originalDamage;                                //后续重构
-        attackRange *= (1 + LevelUPEnhance_L2[index].attackRangeEnhance / 100);
-        attackCD = attackCD / (1 + LevelUPEnhance_L3[index].attackSpeedEnhance/100);
-        arrowSpeed *= (1 + LevelUPEnhance_L3[index].arrowSpeedEnhance/100);
-
-        AttackBuilding LevelUPBuilding = GameObject.Instantiate
-    (LevelUPEnhance_L3[index].LevelUpBuilding, transform.position, Quaternion.identity);
-        LevelUPBuilding.ApplyLevelUP(maxHealth, damage, attackRange, attackCD, arrowSpeed);
-
-        Destroy(this.gameObject);
-        Debug.Log("升级到3级，选项为" + index);
+        int levelFrom = upgradeChoice.levelFrom;
+        int choice = upgradeChoice.choice;
+        ApplyBuildingUpgradeOption(upgradeOptions[levelFrom - 1].upgradeOptions[choice]);
+        Debug.Log(gameObject.name + "已升级" + upgradeChoice);
     }
 
+    private void ApplyBuildingUpgradeOption(UpgradeOption upgradeOption)
+    {
+        maxHealth += upgradeOption.healthBoost_flat;
+        damage.damage *= (1 + upgradeOption.damageBoost_percent / 100);
+        attackRange *= (1 + upgradeOption.attackRangeBoost_percent / 100);
+        attackCollider.radius = attackRange;
+        arrowSpeed *= (1 + upgradeOption.arrowSpeedBoost_percent / 100);
+        attackCD = attackCD / (1 + upgradeOption.attackSpeedBoost_percent / 100);
+    }
+    
     protected virtual void AttackAttackTarget()
     {
         ShootBullet();           
@@ -190,23 +202,20 @@ public abstract class AttackBuilding : Building
         attackTarget = null;
     }
 
-    public void ApplyLevelUP(float maxHealth, Damage damage_Friendly, float attackRange, float attackCD, float arrowSpeed)   //后续增加建设点时再重构
-    {
-        this.maxHealth = maxHealth;
-        this.damage = damage_Friendly;
-        this.attackRange = attackRange;
-        this.attackCD = attackCD;
-        this.arrowSpeed = arrowSpeed;
-        attackCollider.radius = attackRange;
-        health = maxHealth;
 
-        
+    public void Initialize()        //每次enable调用初始化，还原原始属性
+    {
+        damage.damageSource = this.gameObject;
+        returnToBasicAttributes();
     }
 
-    public void Initialize()        //待完成,因为防御塔还没有original属性
+    public void returnToBasicAttributes()
     {
+        maxHealth = basicAttribute.basicMaxHealth;
+        damage.damage = basicAttribute.basicDamage;
+        attackRange = basicAttribute.basicAttackRange;
         attackCollider.radius = attackRange;
-        damage.damage = damage.originalDamage;
-        damage.damageSource = this.gameObject;
+        arrowSpeed = basicAttribute.basicArrowSpeed;
+        attackCD = basicAttribute.basicAttackCD;
     }
 }

@@ -121,22 +121,66 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4cc0268bd8a5a7499b7a51678b9bc76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 150
-  health: 150
-  currentLevel: 2
-  maxLevel: 3
-  LevelUPEnhance_L2: []
-  LevelUPEnhance_L3: []
-  rigidbody: {fileID: 6536876626689397885}
+  maxHealth: 999
+  health: 999
   bulletPrefabs: {fileID: 9009959369473065244, guid: 7f9316223ea96054a951eaa20348c0c2,
     type: 3}
-  arrowSpeed: 3
-  attackRange: 10
-  attackCD: 1
+  basicAttribute: {fileID: 11400000, guid: 82d18f5a2f70a1a408cbd927a78b641e, type: 2}
+  arrowSpeed: 19
+  attackRange: 50
+  attackCD: 0.2
   attackReady: 1
-  damage: 10
+  damage:
+    damageType: 1
+    damage: 99
+    damageSource: {fileID: 0}
   shootPoint: {fileID: 1600404311833415955}
   attackCollider: {fileID: 7784479406231682555}
+  upgradeOptions:
+  - upgradeOptions:
+    - name: "\u57CE\u5821\u5854"
+      description: 
+      healthBoost_flat: 150
+      damageBoost_percent: 0
+      attackRangeBoost_percent: 0
+      arrowSpeedBoost_percent: 100
+      attackSpeedBoost_percent: 1.428571
+    - name: "\u72D9\u51FB\u5854"
+      description: 
+      healthBoost_flat: 0
+      damageBoost_percent: 180
+      attackRangeBoost_percent: 50
+      arrowSpeedBoost_percent: 50
+      attackSpeedBoost_percent: -50
+    - name: "\u88C5\u7532\u5854"
+      description: "\u7B2C\u4E00\u6B21\u53D7\u5230\u4F24\u5BB3\u65F6\u4F1A\u6FC0\u6D3B\u4E00\u4E2A\u62A4\u76FE\uFF0C\u4EE5\u751F\u547D\u503C\u6700\u4F4E\u7684\u5355\u4F4D\u548C\u98DE\u884C\u5355\u4F4D\u4E3A\u76EE\u6807"
+      healthBoost_flat: 350
+      damageBoost_percent: 0
+      attackRangeBoost_percent: 0
+      arrowSpeedBoost_percent: 0
+      attackSpeedBoost_percent: 0
+    - name: "\u7889\u5821\u5854"
+      description: "\u4EE5\u968F\u673A\u5355\u4F4D\u4E3A\u76EE\u6807\uFF0C\u8FDE\u7EED\u653B\u51FB\u65F6\u653B\u51FB\u95F4\u9694\u7F29\u77ED"
+      healthBoost_flat: 75
+      damageBoost_percent: 0
+      attackRangeBoost_percent: -45
+      arrowSpeedBoost_percent: 0
+      attackSpeedBoost_percent: 0
+  - upgradeOptions:
+    - name: 
+      description: 
+      healthBoost_flat: 0
+      damageBoost_percent: 0
+      attackRangeBoost_percent: 0
+      arrowSpeedBoost_percent: 0
+      attackSpeedBoost_percent: 0
+    - name: 
+      description: 
+      healthBoost_flat: 0
+      damageBoost_percent: 0
+      attackRangeBoost_percent: 0
+      arrowSpeedBoost_percent: 0
+      attackSpeedBoost_percent: 0
 --- !u!65 &2351994198493310615
 BoxCollider:
   m_ObjectHideFlags: 0

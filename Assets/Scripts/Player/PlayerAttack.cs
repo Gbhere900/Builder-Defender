@@ -177,7 +177,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void Initialize()
     {
-        damage_Friendly.damage = damage_Friendly.originalDamage;
+       // damage_Friendly.damage = damage_Friendly.originalDamage;
         damage_Friendly.damageSource = this.gameObject;
     }
     

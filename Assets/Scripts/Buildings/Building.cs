@@ -8,15 +8,12 @@ using UnityEngine;
 [RequireComponent(typeof(FriendlyObject))]
 public abstract class Building : MonoBehaviour
 {
+
     [Header("数值")]
     [SerializeField] protected float maxHealth;
     [SerializeField] protected float health;
-    [SerializeField] protected int currentLevel = 1;
-    [SerializeField] protected int maxLevel = 2;
 
-    [Header("升级数值")]
-    [SerializeField] protected List<LevelUpEnhance_AttackBuilding> LevelUPEnhance_L2;
-    [SerializeField] protected List<LevelUpEnhance_AttackBuilding> LevelUPEnhance_L3;
+    
 
     [Header("建筑通用脚本组件")]
 
@@ -64,4 +61,8 @@ public abstract class Building : MonoBehaviour
     {
 
     }
+
+    public abstract void ApplyAllBuildingUpgrades(BuildingData buildingData);
+
+     
 }

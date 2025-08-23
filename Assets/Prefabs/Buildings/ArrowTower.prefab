@@ -915,27 +915,71 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4cc0268bd8a5a7499b7a51678b9bc76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 150
-  health: 150
+  Buildings: []
+  currentBuilding: {fileID: 7042768082822768729}
+  maxHealth: 100
+  health: 100
   currentLevel: 1
   maxLevel: 3
-  LevelUPEnhance_L2:
-  - {fileID: 11400000, guid: ac72a2c3e8adeaa4d95cdc39631b6c04, type: 2}
-  - {fileID: 11400000, guid: fb5a0670b5ada634baa426a02d02c1d5, type: 2}
-  LevelUPEnhance_L3: []
+  LevelCost: 070000000f000000
   bulletPrefabs: {fileID: 9009959369473065244, guid: 7f9316223ea96054a951eaa20348c0c2,
     type: 3}
+  basicAttribute: {fileID: 11400000, guid: 82d18f5a2f70a1a408cbd927a78b641e, type: 2}
   arrowSpeed: 3
   attackRange: 10
   attackCD: 1
   attackReady: 1
   damage:
-    damageType: 0
-    originalDamage: 0
-    damage: 0
+    damageType: 1
+    damage: 8
     damageSource: {fileID: 0}
   shootPoint: {fileID: 8371179513106289366}
   attackCollider: {fileID: 1101771844778436425}
+  upgradeOptions:
+  - upgradeOptions:
+    - name: "\u57CE\u5821\u5854"
+      description: 
+      healthBoost_flat: 150
+      damageBoost_percent: 0
+      attackRangeBoost_percent: 0
+      arrowSpeedBoost_percent: 100
+      attackSpeedBoost_percent: 1.428571
+    - name: "\u72D9\u51FB\u5854"
+      description: 
+      healthBoost_flat: 0
+      damageBoost_percent: 180
+      attackRangeBoost_percent: 50
+      arrowSpeedBoost_percent: 50
+      attackSpeedBoost_percent: -50
+    - name: "\u88C5\u7532\u5854"
+      description: "\u7B2C\u4E00\u6B21\u53D7\u5230\u4F24\u5BB3\u65F6\u4F1A\u6FC0\u6D3B\u4E00\u4E2A\u62A4\u76FE\uFF0C\u4EE5\u751F\u547D\u503C\u6700\u4F4E\u7684\u5355\u4F4D\u548C\u98DE\u884C\u5355\u4F4D\u4E3A\u76EE\u6807"
+      healthBoost_flat: 350
+      damageBoost_percent: 0
+      attackRangeBoost_percent: 0
+      arrowSpeedBoost_percent: 0
+      attackSpeedBoost_percent: 0
+    - name: "\u7889\u5821\u5854"
+      description: "\u4EE5\u968F\u673A\u5355\u4F4D\u4E3A\u76EE\u6807\uFF0C\u8FDE\u7EED\u653B\u51FB\u65F6\u653B\u51FB\u95F4\u9694\u7F29\u77ED"
+      healthBoost_flat: 75
+      damageBoost_percent: 0
+      attackRangeBoost_percent: -45
+      arrowSpeedBoost_percent: 0
+      attackSpeedBoost_percent: 0
+  - upgradeOptions:
+    - name: 
+      description: 
+      healthBoost_flat: 0
+      damageBoost_percent: 0
+      attackRangeBoost_percent: 0
+      arrowSpeedBoost_percent: 0
+      attackSpeedBoost_percent: 0
+    - name: 
+      description: 
+      healthBoost_flat: 0
+      damageBoost_percent: 0
+      attackRangeBoost_percent: 0
+      arrowSpeedBoost_percent: 0
+      attackSpeedBoost_percent: 0
 --- !u!136 &1101771844778436425
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1033,7 +1077,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 2636162113413917981}
-  building: {fileID: 0}
 --- !u!1 &8779586971925174051
 GameObject:
   m_ObjectHideFlags: 0

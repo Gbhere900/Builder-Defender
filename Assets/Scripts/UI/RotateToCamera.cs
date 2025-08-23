@@ -27,8 +27,8 @@ public class RotateToCamera : MonoBehaviour
         //healthBar.transform.up = activeVirtualCamera.gameObject.transform.position - healthBar.transform.position;
         transform.position = gameObject.transform.parent.transform.position
             + activeVirtualCamera.transform.up * cameraOffset;
-        transform.forward = activeVirtualCamera.transform.position - transform.position;
-        transform.right = activeVirtualCamera.transform.up;
+        transform.forward =  transform.position - activeVirtualCamera.transform.position;
+        transform.right = activeVirtualCamera.transform.right;
         // healthBar.transform.forward = - Camera.main.transform.right;
     }
 

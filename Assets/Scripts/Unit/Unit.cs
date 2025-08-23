@@ -59,7 +59,7 @@ public class Unit : MonoBehaviour
     {
         //增加buff系统后重构
         speed = originalSpeed;
-        damage_Friendly.damage = damage_Friendly.originalDamage;
+        //damage_Friendly.damage = damage_Friendly.originalDamage;        //
         damage_Friendly.damageSource = this.gameObject;
         rb = GetComponent<Rigidbody>();
 

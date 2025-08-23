@@ -232,7 +232,7 @@ public class Enemy : MonoBehaviour
         MaxHealth = originalMaxHealth;
         health = MaxHealth;
         speed = originalSpeed;
-        damage.damage = damage.originalDamage;
+       // damage.damage = damage.originalDamage;
         damage.damageSource = this.gameObject;
 
         rb = GetComponent<Rigidbody>();

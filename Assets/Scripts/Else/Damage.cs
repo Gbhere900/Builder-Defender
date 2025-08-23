@@ -7,15 +7,13 @@ using UnityEngine;
 public class Damage 
 {
     public DamageType damageType;
-    public float originalDamage;
     public float damage;
     public GameObject damageSource;
-    Damage(DamageType damageType_Friendly,float originalDamage,GameObject damageSource)
+    Damage(DamageType damageType_Friendly,float damage,GameObject damageSource)
     {
         this.damageType = damageType_Friendly;
-        this.originalDamage = originalDamage;
         this.damageSource = damageSource;
-        this.damage = originalDamage;
+        this.damage = damage;
     }
 
 
