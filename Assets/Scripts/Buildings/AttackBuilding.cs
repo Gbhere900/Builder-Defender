@@ -7,7 +7,7 @@ using static AttackBuilding;
 public abstract class AttackBuilding : Building
 {
     
-    [SerializeField] protected Bullet bulletPrefabs;
+    [SerializeField] protected Bullet bulletPrefab;
     [SerializeField] protected AttackBuildingAttribute basicAttribute;
 
     [SerializeField] protected float arrowSpeed;
@@ -171,7 +171,7 @@ public abstract class AttackBuilding : Building
 
     private void ShootBullet()
     {
-        Bullet bullet = ObjectPoolManager.Instance().GetObject(bulletPrefabs.gameObject).GetComponent<Bullet>();
+        Bullet bullet = ObjectPoolManager.Instance().GetObject(bulletPrefab.gameObject).GetComponent<Bullet>();
         bullet.Initialize(shootPoint.position, attackTarget, damage, arrowSpeed);
         OnShootbullet?.Invoke();
     }
@@ -246,6 +246,10 @@ public abstract class AttackBuilding : Building
         this.attackCD = attackCD;
     }
 
+    public void SetBulletPrefab(Bullet bullet)
+    {
+        bulletPrefab = bullet;
+    }
     
 
 }

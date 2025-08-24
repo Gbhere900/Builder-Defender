@@ -56,8 +56,8 @@ public enum UpgradeType
     FortTower_L2,
     ShooterTower_L3,
     SniperTower_L3,
-    ArmorTower_L3,
-    FortTower_L3
+    FireTower_L3,
+    HealTower_L3
 }
 
 [Serializable]

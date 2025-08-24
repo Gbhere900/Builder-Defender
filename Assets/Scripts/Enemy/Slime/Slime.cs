@@ -18,7 +18,7 @@ public class Slime : Enemy
         }
 
         health -= Mathf.Min(health, damage);
-        OnHealthChanged.Invoke();
+        OnHealthChanged?.Invoke();
         if (health <= 0)
         {
             Die();

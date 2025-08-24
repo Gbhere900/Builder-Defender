@@ -45,16 +45,7 @@ public class Bullet : MonoBehaviour
             attackTarget.GetComponent<Enemy>().ReceiveDamage(damage_Friendly);
             ObjectPoolManager.Instance().ReleaseObject(gameObject);
         }
-        //if (other.TryGetComponent<Enemy>(out Enemy enemy))
-        //{
-        //    enemy.ReceiveDamage(damage);
-        //    ObjectPoolManager.Instance().ReleaseObject(gameObject);
-        //}
 
-        //if (other.gameObject.tag == "Gound")        //后续可能重构
-        //{
-        //    ObjectPoolManager.Instance().ReleaseObject(gameObject);
-        //}
 
         if ((1 << other.gameObject.layer & goundLayer) != 0)
         {

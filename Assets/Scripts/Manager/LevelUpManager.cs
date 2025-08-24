@@ -26,16 +26,21 @@ public class LevelUpManager : MonoBehaviour
                 attackBuilding.AddComponent<SniperTower_L2>();
                 break;
             case UpgradeType.ArmorTower_L2:
+                attackBuilding.AddComponent<ArmorTower_L2>();
                 break;
             case UpgradeType.FortTower_L2:
+                attackBuilding.AddComponent<FortTower_L2>();
                 break;
             case UpgradeType.ShooterTower_L3:
+                attackBuilding.AddComponent<ShooterTower_L3>();
                 break;
             case UpgradeType.SniperTower_L3:
                 break;
-            case UpgradeType.ArmorTower_L3:
+            case UpgradeType.FireTower_L3:
+                attackBuilding.AddComponent<FireTower_L3>();
                 break;
-            case UpgradeType.FortTower_L3:
+            case UpgradeType.HealTower_L3:
+                attackBuilding.AddComponent<HealTower>();
                 break;
         }
 
