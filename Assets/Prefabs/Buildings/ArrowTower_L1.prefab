@@ -879,7 +879,7 @@ GameObject:
   - component: {fileID: 210008173080423322}
   - component: {fileID: 1209586016022176218}
   m_Layer: 0
-  m_Name: ArrowTower
+  m_Name: ArrowTower_L1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -915,13 +915,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4cc0268bd8a5a7499b7a51678b9bc76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Buildings: []
-  currentBuilding: {fileID: 7042768082822768729}
   maxHealth: 100
   health: 100
-  currentLevel: 1
-  maxLevel: 3
-  LevelCost: 070000000f000000
   bulletPrefabs: {fileID: 9009959369473065244, guid: 7f9316223ea96054a951eaa20348c0c2,
     type: 3}
   basicAttribute: {fileID: 11400000, guid: 82d18f5a2f70a1a408cbd927a78b641e, type: 2}

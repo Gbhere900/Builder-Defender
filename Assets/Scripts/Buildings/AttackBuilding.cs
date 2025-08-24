@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static AttackBuilding;
 
 public abstract class AttackBuilding : Building
 {
@@ -27,23 +28,13 @@ public abstract class AttackBuilding : Building
     
     [SerializeField] protected List<UpgradeOptions> upgradeOptions;
 
+    public Action OnSetAttackTarget;
+    public Action OnShootbullet;
+
     [Serializable]
     public class UpgradeOptions
     {
         public List<UpgradeOption> upgradeOptions;
-    }
-
-
-    protected IEnumerator WaitForAttackCD()
-    {
-        yield return new WaitForSeconds(attackCD);
-        attackReady = true;
-    }
-
-    private void Update()
-    {
-        SetClosestGameObjectInDetectRangeAsAimEnemy();
-        TryAttack();
     }
 
     protected override void Awake()             //后面的Awake和Onenabe记得base
@@ -57,6 +48,19 @@ public abstract class AttackBuilding : Building
     {
         base.OnEnable();
         Initialize();             //初始化时也需要使  attackCollider.radius = attackRange;   
+    }
+
+
+    protected IEnumerator WaitForAttackCD()
+    {
+        yield return new WaitForSeconds(attackCD);
+        attackReady = true;
+    }
+
+    private void Update()
+    {
+        SetClosestGameObjectInDetectRangeAsAimEnemy();
+        TryAttack();
     }
 
 
@@ -116,13 +120,7 @@ public abstract class AttackBuilding : Building
             return false;
             
         }
-        //if (attackTargetList[0] == null)
-        //{
-        //    attackTargetList.RemoveAt(0);
-        //    return false;
-        //}
 
-                 //先设置attackTarget再Attack;
         AttackAttackTarget();
         attackReady = false;
         StartCoroutine(WaitForAttackCD());
@@ -163,7 +161,7 @@ public abstract class AttackBuilding : Building
         attackRange *= (1 + upgradeOption.attackRangeBoost_percent / 100);
         attackCollider.radius = attackRange;
         arrowSpeed *= (1 + upgradeOption.arrowSpeedBoost_percent / 100);
-        attackCD = attackCD / (1 + upgradeOption.attackSpeedBoost_percent / 100);
+        attackCD *= (1 + upgradeOption.attackCDBoost_percent / 100);
     }
     
     protected virtual void AttackAttackTarget()
@@ -174,7 +172,8 @@ public abstract class AttackBuilding : Building
     private void ShootBullet()
     {
         Bullet bullet = ObjectPoolManager.Instance().GetObject(bulletPrefabs.gameObject).GetComponent<Bullet>();
-        bullet.Initialize(shootPoint.position, attackTarget, damage, arrowSpeed);        //arrow换成投射物父类
+        bullet.Initialize(shootPoint.position, attackTarget, damage, arrowSpeed);
+        OnShootbullet?.Invoke();
     }
 
     protected virtual void SetClosestGameObjectInDetectRangeAsAimEnemy()       //none参数可能用不到，在这里并不是
@@ -200,6 +199,8 @@ public abstract class AttackBuilding : Building
         }
       //  Debug.LogWarning(gameObject.name + "未找到目标\n");
         attackTarget = null;
+
+        OnSetAttackTarget?.Invoke();         //可以触发狙击塔的重索敌；
     }
 
 
@@ -209,13 +210,42 @@ public abstract class AttackBuilding : Building
         returnToBasicAttributes();
     }
 
-    public void returnToBasicAttributes()
+    public void returnToBasicAttributes()       //经济类建筑要另外写还原属性的函数
     {
         maxHealth = basicAttribute.basicMaxHealth;
+        health = maxHealth;
         damage.damage = basicAttribute.basicDamage;
         attackRange = basicAttribute.basicAttackRange;
         attackCollider.radius = attackRange;
         arrowSpeed = basicAttribute.basicArrowSpeed;
         attackCD = basicAttribute.basicAttackCD;
     }
+
+    public List<GameObject> GetAttackTargetList()
+    {
+        return attackTargetList;
+    }
+
+    public void SetAttackTarget(GameObject attackTaret)
+    {
+        this.attackTarget = attackTaret;
+    }
+
+    public void BoostAttackCD(float attackCDBoost_Percent)
+    {
+        attackCD *= (1 + attackCDBoost_Percent / 100);
+    }
+
+    public float GetAttackCD()
+    {
+         return attackCD; 
+    }
+
+    public void SetAttackCD(float attackCD)
+    {
+        this.attackCD = attackCD;
+    }
+
+    
+
 }

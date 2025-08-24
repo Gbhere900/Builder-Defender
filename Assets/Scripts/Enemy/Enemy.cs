@@ -14,7 +14,7 @@ public class FriendlyUnitTypes
 public class Enemy : MonoBehaviour
 {
     [Header("数值")] 
-    [SerializeField] protected bool canFly;
+    [SerializeField] private EnemyFeature enemyFeature;
     [SerializeField] public List<FriendlyUnitTypes> aimFriendlyUnitTypesList;
 
 [SerializeField] protected float originalMaxHealth;
@@ -347,5 +347,11 @@ IEnumerator WaitForSpeedRecover(float seconds)
         yield return new WaitForSeconds(seconds);
         speed = originalSpeed;                      //完成build系统后重构
         Debug.Log("速度恢复");
+    }
+
+
+    public EnemyFeature GetEnemyFeature()
+    {
+         return enemyFeature; 
     }
 }

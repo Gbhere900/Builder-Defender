@@ -7,7 +7,7 @@ using static AttackBuilding;
 public class BuildingSite : MonoBehaviour
 {
     [SerializeField] private string ID;
-    [SerializeField] protected List<Building> buildings;
+    [SerializeField] protected List<BuildingsList> buildingList;
     [SerializeField] protected Building currentBuilding;
     private bool hasBuilt = false;
     [SerializeField] protected int maxLevel = 3;
@@ -15,6 +15,12 @@ public class BuildingSite : MonoBehaviour
     [SerializeField] protected int firstBuildCost = 3;
     [SerializeField] protected List<int> LevelCost;
     public Action OnInterace;
+
+    [Serializable]
+    public class BuildingsList
+    {
+        public List<Building> buildings;
+    }
 
     [Header("升级")]
     //[SerializeField] protected List<UpgradeOptions> upgradeOptions;
@@ -37,7 +43,7 @@ public class BuildingSite : MonoBehaviour
     }
     public void Build()
     {
-        currentBuilding = GameObject.Instantiate(buildings[0],transform);
+        currentBuilding = GameObject.Instantiate(buildingList[0].buildings[0],transform);
         hasBuilt = true;
     }
 
@@ -53,7 +59,9 @@ public class BuildingSite : MonoBehaviour
 
         if(buildingSiteData.hasBuilt)
         {
-            currentBuilding = GameObject.Instantiate(buildings[buildingSiteData.buildingData.currentLevel - 1], transform).GetComponent<Building>();
+            int index = buildingSiteData.buildingData.currentLevel - 1;
+            int choicce = index == 0? 0 : buildingSiteData.buildingData.upgradeChoices[index-1].choice;
+            currentBuilding = GameObject.Instantiate(buildingList[index].buildings[choicce], transform).GetComponent<Building>();
             currentBuilding.ApplyAllBuildingUpgrades(buildingSiteData.buildingData);
             //经济类完成时补充
         }
@@ -106,7 +114,11 @@ public class BuildingSite : MonoBehaviour
         currentLevel++;
         upgradeChoices.Add(new UpgradeChoice(1, 1));
         GameObject.Destroy(currentBuilding.gameObject);
-        currentBuilding = GameObject.Instantiate(buildings[currentLevel - 1], transform).GetComponent<Building>();
+
+        int index = currentLevel - 1;
+        int choicce = index == 0 ? 0 : upgradeChoices[index - 1].choice - 1;
+
+        currentBuilding = GameObject.Instantiate(buildingList[index].buildings[choicce], transform).GetComponent<Building>();
         BuildingData buildingData = new BuildingData(currentLevel, upgradeChoices);
         currentBuilding.ApplyAllBuildingUpgrades(buildingData);
         //switch (currentBuilding)

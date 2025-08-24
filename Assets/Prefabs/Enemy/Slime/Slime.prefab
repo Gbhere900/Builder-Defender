@@ -216,8 +216,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4d3e74612e9d1a4fa001ab396db8bde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canFly: 0
-  aimFriendlyUnitTypesList: []
+  enemyFeature:
+    enemyType: 1
+    canFly: 0
+    isRangedEnemy: 0
+  aimFriendlyUnitTypesList:
+  - friendUnitTypeList: 01000000
   originalMaxHealth: 200
   MaxHealth: 200
   originalSpeed: 10

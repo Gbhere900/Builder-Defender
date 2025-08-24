@@ -19,7 +19,7 @@ public abstract class Building : MonoBehaviour
 
     protected Rigidbody rb;
 
-    public Action OnHealthChanged;
+    public Action<float,float> OnHealthChanged;
 
     protected virtual void Awake()              //后面的Awake和Onenabe记得base
     {
@@ -28,13 +28,14 @@ public abstract class Building : MonoBehaviour
 
     protected virtual void OnEnable()           //后面的Awake和Onenabe记得base
     {
-        Initialize();   
+          
     }
 
     public void ReceiveDamage(Damage damage)        //增加对建筑易伤加入判断重构
     {
+        float formerHealth = health;
         health -= Math.Min(health, damage.damage);
-        OnHealthChanged.Invoke();
+        OnHealthChanged.Invoke(formerHealth,health);
         if(health <= 0)
         {
             Die();
@@ -57,9 +58,9 @@ public abstract class Building : MonoBehaviour
         return health;
     }
 
-    private void Initialize()       //待完成
+    public void SetHealth(float health)
     {
-
+        this.health = health;
     }
 
     public abstract void ApplyAllBuildingUpgrades(BuildingData buildingData);

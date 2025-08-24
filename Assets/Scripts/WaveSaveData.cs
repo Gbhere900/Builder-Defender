@@ -38,14 +38,27 @@ using UnityEngine;
 [Serializable]
     public class UpgradeOption
     {
+        public UpgradeType upgradeType;
         public string name;
         public string description;
         public float healthBoost_flat;
         public float damageBoost_percent;
         public float attackRangeBoost_percent;
         public float arrowSpeedBoost_percent;
-        public float attackSpeedBoost_percent;
-    }
+        public float attackCDBoost_percent;
+}
+
+public enum UpgradeType
+{
+    ShooterTower_L2,
+    SniperTower_L2,
+    ArmorTower_L2,
+    FortTower_L2,
+    ShooterTower_L3,
+    SniperTower_L3,
+    ArmorTower_L3,
+    FortTower_L3
+}
 
 [Serializable]
 public class UpgradeOptions

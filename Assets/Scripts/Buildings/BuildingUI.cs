@@ -19,7 +19,7 @@ public class BuildingUI : MonoBehaviour
     }
 
 
-    private void Building_OnHealthChanged()
+    private void Building_OnHealthChanged(float fomerHealth,float currentHealrh)
     {
         UpdateHealthBar();
     }
