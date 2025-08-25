@@ -40,7 +40,7 @@ public class LevelUpManager : MonoBehaviour
                 attackBuilding.AddComponent<FireTower_L3>();
                 break;
             case UpgradeType.HealTower_L3:
-                attackBuilding.AddComponent<HealTower>();
+                attackBuilding.AddComponent<HealTower_L3>();
                 break;
         }
 

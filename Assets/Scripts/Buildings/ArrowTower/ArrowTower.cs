@@ -5,5 +5,5 @@ using UnityEngine;
 public class ArrowTower : AttackBuilding
 {
 
-    public MonoBehaviour script;
+    
 }

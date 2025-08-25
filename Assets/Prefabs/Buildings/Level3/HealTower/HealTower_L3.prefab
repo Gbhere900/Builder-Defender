@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 443308103974765707}
   - component: {fileID: 234643354584831538}
+  - component: {fileID: 8250311832368861213}
+  - component: {fileID: 9171071624283131102}
   - component: {fileID: 8604937131383071040}
-  - component: {fileID: 7606876571490818102}
   - component: {fileID: 4713213252958728372}
   - component: {fileID: 5600622833701527050}
   - component: {fileID: 6976911277319213099}
@@ -67,6 +68,114 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &8250311832368861213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3058187428334658314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6495259e8c4112547a8c3923a57196cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healBulletPrefab: {fileID: -1182900753836620242, guid: d567c7f48f842c94c8996635c1ba0127,
+    type: 3}
+--- !u!114 &9171071624283131102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3058187428334658314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4cc0268bd8a5a7499b7a51678b9bc76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  health: 100
+  bulletPrefab: {fileID: 9009959369473065244, guid: 7f9316223ea96054a951eaa20348c0c2,
+    type: 3}
+  basicAttribute: {fileID: 11400000, guid: 82d18f5a2f70a1a408cbd927a78b641e, type: 2}
+  arrowSpeed: 3
+  attackRange: 10
+  attackCD: 1
+  attackReady: 1
+  damage:
+    damageType: 1
+    damage: 8
+    damageSource: {fileID: 0}
+  shootPoint: {fileID: 4721770377774139344}
+  attackCollider: {fileID: 0}
+  upgradeOptions:
+  - upgradeOptions:
+    - upgradeType: 0
+      name: "\u57CE\u5821\u5854"
+      description: 
+      healthBoost_flat: 150
+      damageBoost_percent: 0
+      attackRangeBoost_percent: 0
+      arrowSpeedBoost_percent: 100
+      attackCDBoost_percent: 0
+    - upgradeType: 0
+      name: "\u72D9\u51FB\u5854"
+      description: "\u4F18\u5148\u653B\u51FB\u8840\u91CF\u6700\u9AD8\u5355\u4F4D\u548C\u653B\u57CE\u5355\u4F4D"
+      healthBoost_flat: 0
+      damageBoost_percent: 180
+      attackRangeBoost_percent: 50
+      arrowSpeedBoost_percent: 50
+      attackCDBoost_percent: 0
+    - upgradeType: 0
+      name: "\u88C5\u7532\u5854"
+      description: "\u7B2C\u4E00\u6B21\u53D7\u5230\u4F24\u5BB3\u65F6\u4F1A\u6FC0\u6D3B\u4E00\u4E2A\u62A4\u76FE\uFF0C\u4EE5\u751F\u547D\u503C\u6700\u4F4E\u7684\u5355\u4F4D\u548C\u98DE\u884C\u5355\u4F4D\u4E3A\u76EE\u6807"
+      healthBoost_flat: 350
+      damageBoost_percent: 0
+      attackRangeBoost_percent: 0
+      arrowSpeedBoost_percent: 0
+      attackCDBoost_percent: 0
+    - upgradeType: 0
+      name: "\u7889\u5821\u5854"
+      description: "\u4EE5\u968F\u673A\u5355\u4F4D\u4E3A\u76EE\u6807\uFF0C\u8FDE\u7EED\u653B\u51FB\u65F6\u653B\u51FB\u95F4\u9694\u7F29\u77ED"
+      healthBoost_flat: 75
+      damageBoost_percent: 0
+      attackRangeBoost_percent: -45
+      arrowSpeedBoost_percent: 0
+      attackCDBoost_percent: 0
+  - upgradeOptions:
+    - upgradeType: 0
+      name: "\u5C04\u624B\u5C16\u5854"
+      description: "\u989D\u5916\u5BF9\u8303\u56F4\u5185\u4E00\u4E2A\u654C\u4EBA\u5C04\u51FA\u7BAD\u77E2"
+      healthBoost_flat: 350
+      damageBoost_percent: 0
+      attackRangeBoost_percent: 0
+      arrowSpeedBoost_percent: 0
+      attackCDBoost_percent: -30
+    - upgradeType: 0
+      name: "\u5F39\u9053\u5C16\u5854"
+      description: "\u51CF\u7F13\u88AB\u51FB\u4E2D\u654C\u4EBA\u7684\u901F\u5EA6"
+      healthBoost_flat: 0
+      damageBoost_percent: 450
+      attackRangeBoost_percent: 0
+      arrowSpeedBoost_percent: 50
+      attackCDBoost_percent: 50
+    - upgradeType: 0
+      name: "\u706B\u7130\u5C16\u5854"
+      description: "\u6295\u5C04\u7269\u4F1A\u7206\u70B8\uFF0C\u9020\u6210\u8303\u56F4\u4F24\u5BB3\u3002\u5854\u53EF\u4EE5\u5411\u8FD1\u8DDD\u79BB\u654C\u4EBA\u503E\u5012\u70ED\u6CB9"
+      healthBoost_flat: 250
+      damageBoost_percent: -25
+      attackRangeBoost_percent: 0
+      arrowSpeedBoost_percent: 0
+      attackCDBoost_percent: 0
+    - upgradeType: 0
+      name: "\u6CBB\u7597\u5C16\u5854"
+      description: "\u6B64\u5854\u4EE5\u53CB\u65B9\u5355\u4F4D\u4E3A\u76EE\u6807\uFF0C\u4F24\u5BB3\u8F6C\u5316\u4E3A\u5BF9\u53CB\u65B9\u5355\u4F4D\u7684\u6CBB\u7597"
+      healthBoost_flat: 750
+      damageBoost_percent: 10
+      attackRangeBoost_percent: 0
+      arrowSpeedBoost_percent: 0
+      attackCDBoost_percent: -30
 --- !u!114 &8604937131383071040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,37 +189,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   friendlyUnitType: 1
---- !u!114 &7606876571490818102
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3058187428334658314}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d852f269cf0356e49aa27810b912a92b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BuildingMeshs: []
-  maxHealth: 150
-  health: 150
-  currentLevel: 2
-  maxLevel: 3
-  LevelCost: 
-  bulletPrefabs: {fileID: -1182900753836620242, guid: d567c7f48f842c94c8996635c1ba0127,
-    type: 3}
-  basicAttribute: {fileID: 0}
-  arrowSpeed: 10
-  attackRange: 10
-  attackCD: 1
-  attackReady: 1
-  damage:
-    damageType: 1
-    damage: 10
-    damageSource: {fileID: 0}
-  shootPoint: {fileID: 4721770377774139344}
-  attackCollider: {fileID: 5600622833701527050}
 --- !u!65 &4713213252958728372
 BoxCollider:
   m_ObjectHideFlags: 0

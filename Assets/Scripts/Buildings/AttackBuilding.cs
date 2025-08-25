@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static AttackBuilding;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public abstract class AttackBuilding : Building
 {
@@ -30,6 +31,9 @@ public abstract class AttackBuilding : Building
 
     public Action OnSetAttackTarget;
     public Action OnShootbullet;
+    public Action<Collider,OnAttackTrigerEnterCallBack> OnAttackTriggerEnter;
+    public Action<Collider> OnAttackTriggerExit;
+    public delegate void OnAttackTrigerEnterCallBack(Enemy enemy);
 
     [Serializable]
     public class UpgradeOptions
@@ -66,7 +70,8 @@ public abstract class AttackBuilding : Building
 
     protected void OnTriggerEnter(Collider other)     //回血塔重写这个函数
     {
-        OnTriggerEnterLogic(other);     
+        OnTriggerEnterLogic(other);
+        
     }
 
     protected virtual void OnTriggerEnterLogic(Collider other)
@@ -78,8 +83,17 @@ public abstract class AttackBuilding : Building
             attackTargetList.Add(enemy.gameObject);
             enemy.OnDead += OnEnemyDead;
         }
+        
+        OnAttackTriggerEnter?.Invoke(other,RemoveEnemyInAttackTargetList);
     }
+
     private void OnEnemyDead(Enemy enemy)
+    {
+        
+        RemoveEnemyInAttackTargetList(enemy);
+    }
+
+    private void RemoveEnemyInAttackTargetList(Enemy enemy)
     {
         if (attackTargetList.Contains(enemy.gameObject))
         {
@@ -88,10 +102,9 @@ public abstract class AttackBuilding : Building
         }
         else
         {
-            Debug.LogWarning("敌人不在PlayerAttack列表中时死亡事件触发，说明敌人在离开玩家攻击范围后未取消订阅事件，现在执行取消订阅");
+            Debug.LogWarning("敌人不在PlayerAttack列表中时移除事件触发，说明敌人在离开玩家攻击范围后未取消订阅事件，现在执行取消订阅");
             enemy.OnDead -= OnEnemyDead;
         }
-
     }
 
     protected void OnTriggerExit(Collider other)        //回血塔重写这个函数
@@ -109,17 +122,21 @@ public abstract class AttackBuilding : Building
             attackTargetList.Remove(enemy.gameObject);
             enemy.OnDead -= OnEnemyDead;
         }
+
+        OnAttackTriggerExit?.Invoke(other);
     }
     
     protected virtual bool TryAttack()
     {
         if (!attackReady)
             return false;
-        if(attackTargetList.Count == 0)
-        {
-            return false;
+        //if(attackTargetList.Count == 0)
+        //{
+        //    return false;
             
-        }
+        //}
+        if(attackTarget == null)
+            return false;
 
         AttackAttackTarget();
         attackReady = false;
@@ -176,7 +193,7 @@ public abstract class AttackBuilding : Building
         OnShootbullet?.Invoke();
     }
 
-    protected virtual void SetClosestGameObjectInDetectRangeAsAimEnemy()       //none参数可能用不到，在这里并不是
+    protected virtual void SetClosestGameObjectInDetectRangeAsAimEnemy()      
     {
 
         float minDistance = float.MaxValue;
@@ -194,13 +211,13 @@ public abstract class AttackBuilding : Building
         if (index != -1)
         {
             attackTarget = attackTargetList[index];
-
+            OnSetAttackTarget?.Invoke();              //可以触发狙击塔/治疗塔的重索敌；
             return;
         }
       //  Debug.LogWarning(gameObject.name + "未找到目标\n");
         attackTarget = null;
 
-        OnSetAttackTarget?.Invoke();         //可以触发狙击塔的重索敌；
+
     }
 
 

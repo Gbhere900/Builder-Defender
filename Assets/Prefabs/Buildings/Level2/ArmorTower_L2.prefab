@@ -99,7 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   health: 100
-  bulletPrefabs: {fileID: 9009959369473065244, guid: 7f9316223ea96054a951eaa20348c0c2,
+  bulletPrefab: {fileID: 9009959369473065244, guid: 7f9316223ea96054a951eaa20348c0c2,
     type: 3}
   basicAttribute: {fileID: 11400000, guid: 82d18f5a2f70a1a408cbd927a78b641e, type: 2}
   arrowSpeed: 3
@@ -179,7 +179,6 @@ MonoBehaviour:
       attackRangeBoost_percent: 0
       arrowSpeedBoost_percent: 0
       attackCDBoost_percent: -30
-  script: {fileID: 0}
 --- !u!136 &92560532066541361
 CapsuleCollider:
   m_ObjectHideFlags: 0
